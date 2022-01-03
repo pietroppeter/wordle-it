@@ -13,3 +13,5 @@ Italian words taken from https://github.com/napolux/paroleitaliane
 Run `nim r itLines` and replace two lines in wordle-it.js to regenerate.
 
 Analytics publicly available at: https://plausible.io/pietroppeter.github.io%2Fwordle-it
+
+To reset state (also works for original wordle), type in console of your browser: `window.localStorage.clear()`
