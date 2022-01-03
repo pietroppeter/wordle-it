@@ -1,5 +1,7 @@
 # Wordle🇮🇹
 
+https://pietroppeter.github.io/wordle-it/wordle.html
+
 An italian version of https://powerlanguage.co.uk/wordle/
 
 Basically it just replaces two list of words in original javascript.
