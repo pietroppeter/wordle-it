@@ -8,7 +8,7 @@ Basically it just replaces two list of words in original javascript. The hint fo
 
 Current status is minimal changes to have this work with Italian words, many improvements can be surely made (including further translation, better word selection/sources, ...).
 
-Italian words taken from https://github.com/napolux/paroleitaliane
+Italian words taken from https://github.com/napolux/paroleitaliane and https://github.com/sigmasaur/AnagramSolver
 
 Run `nim r itLines` and replace two lines in wordle-it.js to regenerate.
 
