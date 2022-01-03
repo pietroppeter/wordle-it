@@ -4,7 +4,7 @@ https://pietroppeter.github.io/wordle-it/wordle.html
 
 An italian version of https://powerlanguage.co.uk/wordle/
 
-Basically it just replaces two list of words in original javascript.
+Basically it just replaces two list of words in original javascript. The hint for this came to me from: https://bert.org/2021/11/24/the-best-starting-word-in-wordle/
 
 Current status is minimal changes to have this work with Italian words, many improvements can be surely made (including further translation, better word selection/sources, ...).
 
