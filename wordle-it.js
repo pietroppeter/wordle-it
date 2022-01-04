@@ -1434,7 +1434,7 @@ this.wordle = this.wordle || {}, this.wordle.bundle = function(e) {
                               r = e.isWin,
                               n = JSON.parse(window.localStorage.getItem(j)),
                               i = JSON.parse(window.localStorage.getItem(S)),
-                              l = "Par🇮🇹le".concat(s);
+                              l = "Par🇮🇹le ".concat(s);
                           l += " ".concat(r ? t : "X", "/").concat(6), o && (l += "*");
                           var d = "";
                           return a.forEach((function(e) {
