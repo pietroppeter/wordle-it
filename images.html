@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <title>images.nim</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🐳</text></svg>">
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link rel='stylesheet' href='https://unpkg.com/normalize.css/'>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/dark.min.css">
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/pietroppeter/nimib/assets/androidstudio.css'>
+  <style>
+.nb-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nb-small {
+  font-size: 0.8rem;
+}
+button.nb-small {
+  float: right;
+  padding: 2px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+section#source {
+  display:none
+}
+</style>
+  
+</head>
+<body>
+<header>
+<div class="nb-box">
+  <span><a href=".">🏡</a></span>
+  <span><code>images.nim</code></span>
+  <span><a href="https://github.com/pietroppeter/wordle-it"><svg aria-hidden="true" width="1.2em" height="1.2em" style="vertical-align: middle; fill: #fff" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a></span>
+</div>
+<hr>
+</header><main>
+<h2>Generating images for PAR🇮🇹LE</h2>
+<h3>Logo</h3>
+<p>this is the first image I have to reproduce: the <code>W</code> logo (size 144x144)</p>
+<figure>
+<img src="./images/wordle_logo_144x144.png" alt="">
+<figcaption></figcaption>
+</figure>
+<ul>
+<li>by style inspection, font is <em>Clear Sans</em></li>
+<li>download font from first google result: <a href="https://www.fontsquirrel.com/fonts/clear-sans">fontsquirrel</a></li>
+<li>use <a href="https://github.com/treeform/pixie">pixie</a></li>
+</ul>
+<pre><code class="nim hljs"><span class="hljs-keyword">import</span>
+  pixie
+
+<span class="hljs-keyword">let</span>
+  green = parseHex(<span class="hljs-string">&quot;6aaa64&quot;</span>)
+  yellow = parseHex(<span class="hljs-string">&quot;c9b458&quot;</span>)
+  darkGray = parseHex(<span class="hljs-string">&quot;939598&quot;</span>)
+  white = color(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+  black = parseHex(<span class="hljs-string">&quot;212121&quot;</span>)
+<span class="hljs-keyword">let</span> typeface = readTypeface(<span class="hljs-string">&quot;fonts/ClearSans-Bold.ttf&quot;</span>)
+<span class="hljs-keyword">proc</span> newFont(typeface: <span class="hljs-type">Typeface</span>; size: <span class="hljs-built_in">float32</span>; color: <span class="hljs-type">Color</span>): <span class="hljs-type">Font</span> =
+  <span class="hljs-literal">result</span> = newFont(typeface)
+  <span class="hljs-literal">result</span>.size = size
+  <span class="hljs-literal">result</span>.paint.color = color
+
+<span class="hljs-keyword">proc</span> imageLetter(c: <span class="hljs-built_in">char</span>; size: <span class="hljs-built_in">int</span>): <span class="hljs-type">Image</span> =
+  <span class="hljs-keyword">let</span> sizeFont: <span class="hljs-built_in">float32</span> = <span class="hljs-number">11</span> * size.<span class="hljs-built_in">float32</span> / <span class="hljs-number">12</span>
+  <span class="hljs-keyword">let</span> image = newImage(size, size)
+  image.fill(green)
+  <span class="hljs-keyword">var</span> font = newFont(typeface, sizeFont, white)
+  image.fillText(font, $c, bounds = vec2(size.<span class="hljs-built_in">float32</span>, sizeFont),
+                 hAlign = haCenter, vAlign = vaMiddle)
+  <span class="hljs-keyword">return</span> image
+
+imageLetter(<span class="hljs-string">'W'</span>, <span class="hljs-number">144</span>).writeFile(<span class="hljs-string">&quot;images/wordle_logo_reproduced.png&quot;</span>)</code></pre>
+<p>and the output looks fine:</p>
+<figure>
+<img src="./images/wordle_logo_reproduced.png" alt="">
+<figcaption></figcaption>
+</figure>
+<p>now I generate the <code>P</code> variant for all sizes required by <a href="manifest.json">manifest.json</a></p>
+<pre><code class="nim hljs"><span class="hljs-keyword">import</span>
+  strformat
+
+<span class="hljs-keyword">let</span> sizes = [<span class="hljs-number">32</span>, <span class="hljs-number">48</span>, <span class="hljs-number">72</span>, <span class="hljs-number">96</span>, <span class="hljs-number">144</span>, <span class="hljs-number">168</span>, <span class="hljs-number">192</span>, <span class="hljs-number">512</span>]
+<span class="hljs-keyword">var</span> filenames: <span class="hljs-built_in">seq</span>[<span class="hljs-built_in">string</span>]
+<span class="hljs-keyword">for</span> size <span class="hljs-keyword">in</span> sizes:
+  <span class="hljs-keyword">let</span> filename = &amp;<span class="hljs-string">&quot;images/parle_logo_{size}x{size}.png&quot;</span>
+  imageLetter(<span class="hljs-string">'P'</span>, size).writeFile(filename)
+  filenames.add filename</code></pre>
+<figure>
+<img src="./images/parle_logo_32x32.png" alt="">
+<figcaption></figcaption>
+</figure>
+<figure>
+<img src="./images/parle_logo_48x48.png" alt="">
+<figcaption></figcaption>
+</figure>
+<figure>
+<img src="./images/parle_logo_72x72.png" alt="">
+<figcaption></figcaption>
+</figure>
+<figure>
+<img src="./images/parle_logo_96x96.png" alt="">
+<figcaption></figcaption>
+</figure>
+<figure>
+<img src="./images/parle_logo_144x144.png" alt="">
+<figcaption></figcaption>
+</figure>
+<figure>
+<img src="./images/parle_logo_168x168.png" alt="">
+<figcaption></figcaption>
+</figure>
+<figure>
+<img src="./images/parle_logo_192x192.png" alt="">
+<figcaption></figcaption>
+</figure>
+<figure>
+<img src="./images/parle_logo_512x512.png" alt="">
+<figcaption></figcaption>
+</figure>
+<h3>Open Graph Image</h3>
+<p>Now I need to reproduce (and then translate) the <a href="https://ogp.me">open graph</a> image (1200x630)</p>
+<figure>
+<img src="./images/wordle_og_1200x630.png" alt="">
+<figcaption></figcaption>
+</figure>
+<pre><code class="nim hljs"><span class="hljs-keyword">let</span> image = newImage(<span class="hljs-number">1200</span>, <span class="hljs-number">630</span>)</code></pre>
+<p>Inspecting the image, I can recover size of squares, gaps, and margins
+making sure that:</p>
+<ul>
+<li>horizontally they sum up to 1200</li>
+<li>and without borders they sum up to 1080;</li>
+<li>vertically they sum up to 630</li>
+</ul>
+<pre><code class="nim hljs"><span class="hljs-keyword">let</span>
+  squareSide = <span class="hljs-number">166.</span><span class="hljs-built_in">float32</span>
+  gap = <span class="hljs-number">16.8</span>.<span class="hljs-built_in">float32</span>
+  horizontalMargin = <span class="hljs-number">60.</span><span class="hljs-built_in">float32</span>
+  topMargin = <span class="hljs-number">192.</span><span class="hljs-built_in">float32</span>
+  bottomMargin = <span class="hljs-number">272.</span><span class="hljs-built_in">float32</span>
+  vertGap = <span class="hljs-number">2</span> * gap
+<span class="hljs-keyword">echo</span> <span class="hljs-number">6</span> * squareSide + <span class="hljs-number">5</span> * gap + <span class="hljs-number">2</span> * horizontalMargin
+<span class="hljs-keyword">echo</span> <span class="hljs-number">6</span> * squareSide + <span class="hljs-number">5</span> * gap
+<span class="hljs-keyword">echo</span> topMargin + squareSide + bottomMargin</code></pre><pre><samp>1200.0
+1080.0
+630.0</samp></pre>
+<pre><code class="nim hljs"><span class="hljs-keyword">var</span> sizeFont = <span class="hljs-number">10.5</span> * squareSide / <span class="hljs-number">12</span>
+<span class="hljs-keyword">var</span> font = newFont(typeface, sizeFont, white)
+<span class="hljs-keyword">proc</span> addSquare(image: <span class="hljs-type">Image</span>; i: <span class="hljs-built_in">int</span>; c: <span class="hljs-built_in">char</span>; color: <span class="hljs-type">Color</span>) =
+  <span class="hljs-keyword">let</span> ctx = newContext(image)
+  ctx.fillStyle = color
+  <span class="hljs-keyword">let</span>
+    pos = vec2(horizontalMargin + <span class="hljs-built_in">float32</span>(i) * squareSide + <span class="hljs-built_in">float32</span>(i) * gap,
+               topMargin)
+    wh = vec2(squareSide, squareSide)
+  ctx.fillRect(rect(pos, wh))
+  image.fillText(font, $c, transform = translate(pos),
+                 bounds = vec2(squareSide, sizeFont), hAlign = haCenter,
+                 vAlign = vaMiddle)
+
+image.fill(white)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span> .. <span class="hljs-number">5</span>:
+  <span class="hljs-keyword">let</span> word = <span class="hljs-string">&quot;WORDLE&quot;</span>
+  image.addSquare(i, word[i], green)
+sizeFont = squareSide / <span class="hljs-number">3</span>
+font = newFont(typeface, sizeFont, black)
+<span class="hljs-keyword">let</span> text = <span class="hljs-string">&quot;A DAILY WORD GAME&quot;</span>
+image.fillText(font, text, transform = translate(
+    vec2(horizontalMargin, topMargin + squareSide + vertGap)),
+               bounds = vec2(<span class="hljs-number">1080</span>, sizeFont), hAlign = haCenter,
+               vAlign = vaMiddle)
+image.writeFile(<span class="hljs-string">&quot;images/wordle_og_image_reproduced.png&quot;</span>)</code></pre>
+<figure>
+<img src="./images/wordle_og_image_reproduced.png" alt="">
+<figcaption></figcaption>
+</figure>
+<p>It is evident this is not the correct font but result is good enough</p>
+<p>Now let's translate:</p>
+<figure>
+<img src="./images/flag_italy.png" alt="">
+<figcaption></figcaption>
+</figure>
+<pre><code class="nim hljs"><span class="hljs-keyword">let</span> image2 = newImage(<span class="hljs-number">1200</span>, <span class="hljs-number">630</span>)
+sizeFont = <span class="hljs-number">10.5</span> * squareSide / <span class="hljs-number">12</span>
+font = newFont(typeface, sizeFont, white)
+image2.fill(white)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span> .. <span class="hljs-number">5</span>:
+  <span class="hljs-keyword">let</span> word = <span class="hljs-string">&quot;PAR_LE&quot;</span>
+  <span class="hljs-keyword">let</span> squareColor = <span class="hljs-keyword">block</span>:
+    <span class="hljs-keyword">if</span> i == <span class="hljs-number">0</span>:
+      green
+    <span class="hljs-keyword">elif</span> i <span class="hljs-keyword">in</span> [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>]:
+      yellow
+    <span class="hljs-keyword">else</span>:
+      darkGray
+  <span class="hljs-keyword">if</span> word[i] != <span class="hljs-string">'_'</span>:
+    image2.addSquare(i, word[i], squareColor)
+sizeFont = squareSide / <span class="hljs-number">3</span>
+font = newFont(typeface, sizeFont, black)
+<span class="hljs-keyword">let</span> text2 = <span class="hljs-string">&quot;UN GIOCO DI PAROLE AL GIORNO&quot;</span>
+image2.fillText(font, text2, transform = translate(
+    vec2(horizontalMargin, topMargin + squareSide + vertGap)),
+                bounds = vec2(<span class="hljs-number">1080</span>, sizeFont), hAlign = haCenter,
+                vAlign = vaMiddle)
+<span class="hljs-keyword">let</span> flag = readImage(<span class="hljs-string">&quot;images/flag_italy.png&quot;</span>)
+image2.draw(flag, translate(vec2(horizontalMargin + <span class="hljs-number">3</span> * squareSide + <span class="hljs-number">3</span> * gap,
+                                 topMargin)))
+image2.writeFile(<span class="hljs-string">&quot;images/parle_og_1200x630.png&quot;</span>)</code></pre>
+<figure>
+<img src="./images/parle_og_1200x630.png" alt="">
+<figcaption></figcaption>
+</figure>
+</main>
+<footer>
+<hr>
+<div class="nb-box">
+  <span><span class="nb-small">made with <a href="https://pietroppeter.github.io/nimib/">nimib 🐳</a></span></span>
+  <span></span>
+  <span><button class="nb-small" id="show" onclick="toggleSourceDisplay()">Show Source</button></span>
+</div>
+</footer>
+<section id="source">
+<pre><code class="nim hljs"><span class="hljs-keyword">import</span> nimib
+
+nbInit
+nb.darkMode
+nbText: <span class="hljs-string">&quot;&quot;&quot;## Generating images for PAR🇮🇹LE
+
+### Logo
+
+this is the first image I have to reproduce: the `W` logo (size 144x144)
+&quot;&quot;&quot;</span>
+nbImage(<span class="hljs-string">&quot;images/wordle_logo_144x144.png&quot;</span>)
+nbText: <span class="hljs-string">&quot;&quot;&quot;
+* by style inspection, font is _Clear Sans_
+* download font from first google result: [fontsquirrel](https://www.fontsquirrel.com/fonts/clear-sans)
+* use [pixie](https://github.com/treeform/pixie)
+&quot;&quot;&quot;</span>
+nbCode:
+  <span class="hljs-keyword">import</span> pixie
+
+  <span class="hljs-keyword">let</span>
+    <span class="hljs-comment"># color codes from wordle's style</span>
+    green = parseHex(<span class="hljs-string">&quot;6aaa64&quot;</span>)
+    yellow = parseHex(<span class="hljs-string">&quot;c9b458&quot;</span>)
+    darkGray = parseHex(<span class="hljs-string">&quot;939598&quot;</span>)
+    white = color(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+    black = parseHex(<span class="hljs-string">&quot;212121&quot;</span>)
+  <span class="hljs-keyword">let</span> typeface = readTypeface(<span class="hljs-string">&quot;fonts/ClearSans-Bold.ttf&quot;</span>)
+
+  <span class="hljs-keyword">proc</span> newFont(typeface: <span class="hljs-type">Typeface</span>, size: <span class="hljs-built_in">float32</span>, color: <span class="hljs-type">Color</span>): <span class="hljs-type">Font</span> =
+    <span class="hljs-literal">result</span> = newFont(typeface)
+    <span class="hljs-literal">result</span>.size = size
+    <span class="hljs-literal">result</span>.paint.color = color
+
+  <span class="hljs-keyword">proc</span> imageLetter(c: <span class="hljs-built_in">char</span>, size: <span class="hljs-built_in">int</span>): <span class="hljs-type">Image</span> =
+    <span class="hljs-keyword">let</span> sizeFont: <span class="hljs-built_in">float32</span> = <span class="hljs-number">11</span>*size.<span class="hljs-built_in">float32</span> / <span class="hljs-number">12</span> 
+
+    <span class="hljs-keyword">let</span> image = newImage(size, size)
+    image.fill(green)
+
+    <span class="hljs-keyword">var</span> font = newFont(typeface, sizeFont, white)
+
+    image.fillText(font, $c, bounds = vec2(size.<span class="hljs-built_in">float32</span>, sizeFont), hAlign = haCenter, vAlign = vaMiddle)
+    <span class="hljs-keyword">return</span> image
+  
+  imageLetter(<span class="hljs-string">'W'</span>, <span class="hljs-number">144</span>).writeFile(<span class="hljs-string">&quot;images/wordle_logo_reproduced.png&quot;</span>)
+nbText: <span class="hljs-string">&quot;&quot;&quot;and the output looks fine:&quot;&quot;&quot;</span>
+nbImage(<span class="hljs-string">&quot;images/wordle_logo_reproduced.png&quot;</span>)
+nbText: <span class="hljs-string">&quot;now I generate the `P` variant for all sizes required by [manifest.json](manifest.json)&quot;</span>
+nbCode:
+  <span class="hljs-keyword">import</span> strformat
+  <span class="hljs-keyword">let</span> sizes = [<span class="hljs-number">32</span>, <span class="hljs-number">48</span>, <span class="hljs-number">72</span>, <span class="hljs-number">96</span>, <span class="hljs-number">144</span>, <span class="hljs-number">168</span>, <span class="hljs-number">192</span>, <span class="hljs-number">512</span>] <span class="hljs-comment"># 32, 192 used for favicon</span>
+  <span class="hljs-keyword">var</span> filenames: <span class="hljs-built_in">seq</span>[<span class="hljs-built_in">string</span>]
+  <span class="hljs-keyword">for</span> size <span class="hljs-keyword">in</span> sizes:
+    <span class="hljs-keyword">let</span> filename = &amp;<span class="hljs-string">&quot;images/parle_logo_{size}x{size}.png&quot;</span>
+    imageLetter(<span class="hljs-string">'P'</span>, size).writeFile(filename)
+    filenames.add filename
+<span class="hljs-keyword">for</span> filename <span class="hljs-keyword">in</span> filenames:
+  nbImage(filename)
+
+nbText: <span class="hljs-string">&quot;&quot;&quot;### Open Graph Image
+Now I need to reproduce (and then translate) the [open graph](https://ogp.me) image (1200x630)
+&quot;&quot;&quot;</span>
+<span class="hljs-comment"># https://www.dailywordle.com/images/wordle_og_1200x630.png</span>
+nbImage(<span class="hljs-string">&quot;images/wordle_og_1200x630.png&quot;</span>)
+nbCode:
+  <span class="hljs-keyword">let</span> image = newImage(<span class="hljs-number">1200</span>, <span class="hljs-number">630</span>)
+nbText: &amp;<span class="hljs-string">&quot;&quot;&quot;
+Inspecting the image, I can recover size of squares, gaps, and margins
+making sure that:
+  * horizontally they sum up to 1200
+  * and without borders they sum up to 1080;
+  * vertically they sum up to 630
+&quot;&quot;&quot;</span>
+nbCode:
+  <span class="hljs-keyword">let</span>
+    squareSide = <span class="hljs-number">166.</span><span class="hljs-built_in">float32</span>
+    gap = <span class="hljs-number">16.8</span>.<span class="hljs-built_in">float32</span>
+    horizontalMargin = <span class="hljs-number">60.</span><span class="hljs-built_in">float32</span>
+    topMargin = <span class="hljs-number">192.</span><span class="hljs-built_in">float32</span>
+    bottomMargin = <span class="hljs-number">272.</span><span class="hljs-built_in">float32</span>
+    vertGap = <span class="hljs-number">2</span>*gap
+  <span class="hljs-keyword">echo</span> <span class="hljs-number">6</span>*squareSide + <span class="hljs-number">5</span>*gap + <span class="hljs-number">2</span>*horizontalMargin
+  <span class="hljs-keyword">echo</span> <span class="hljs-number">6</span>*squareSide + <span class="hljs-number">5</span>*gap
+  <span class="hljs-keyword">echo</span> topMargin + squareSide + bottomMargin
+nbCode:
+  <span class="hljs-keyword">var</span> sizeFont = <span class="hljs-number">10.5</span>*squareSide / <span class="hljs-number">12</span>
+  <span class="hljs-keyword">var</span> font = newFont(typeface, sizeFont, white)
+
+  <span class="hljs-keyword">proc</span> addSquare(image: <span class="hljs-type">Image</span>, i: <span class="hljs-built_in">int</span>, c: <span class="hljs-built_in">char</span>, color: <span class="hljs-type">Color</span>) =
+    <span class="hljs-keyword">let</span> ctx = newContext(image)
+    ctx.fillStyle = color
+
+    <span class="hljs-keyword">let</span>
+      pos = vec2(horizontalMargin + <span class="hljs-built_in">float32</span>(i)*squareSide + <span class="hljs-built_in">float32</span>(i)*gap, topMargin)
+      wh = vec2(squareSide, squareSide)
+
+    ctx.fillRect(rect(pos, wh))
+    image.fillText(font, $c, transform = translate(pos), bounds = vec2(squareSide, sizeFont), hAlign = haCenter, vAlign = vaMiddle)
+
+  image.fill(white)
+  <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span> .. <span class="hljs-number">5</span>:
+    <span class="hljs-keyword">let</span> word = <span class="hljs-string">&quot;WORDLE&quot;</span>
+    image.addSquare(i, word[i], green)
+
+  sizeFont = squareSide / <span class="hljs-number">3</span>
+  font = newFont(typeface, sizeFont, black)
+  <span class="hljs-keyword">let</span> text = <span class="hljs-string">&quot;A DAILY WORD GAME&quot;</span>
+  image.fillText(font, text, transform = translate(vec2(horizontalMargin, topMargin + squareSide + vertGap)), bounds = vec2(<span class="hljs-number">1080</span>, sizeFont), hAlign = haCenter, vAlign = vaMiddle)
+
+  image.writeFile(<span class="hljs-string">&quot;images/wordle_og_image_reproduced.png&quot;</span>)
+nbImage(<span class="hljs-string">&quot;images/wordle_og_image_reproduced.png&quot;</span>)
+
+nbText: <span class="hljs-string">&quot;&quot;&quot;
+It is evident this is not the correct font but result is good enough
+
+Now let's translate:
+&quot;&quot;&quot;</span>
+nbImage(<span class="hljs-string">&quot;images/flag_italy.png&quot;</span>)
+nbCode:
+  <span class="hljs-keyword">let</span> image2 = newImage(<span class="hljs-number">1200</span>, <span class="hljs-number">630</span>)
+
+  sizeFont = <span class="hljs-number">10.5</span>*squareSide / <span class="hljs-number">12</span>
+  font = newFont(typeface, sizeFont, white)
+
+  image2.fill(white)
+  <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span> .. <span class="hljs-number">5</span>:
+    <span class="hljs-keyword">let</span> word = <span class="hljs-string">&quot;PAR_LE&quot;</span>
+    <span class="hljs-keyword">let</span> squareColor = <span class="hljs-keyword">block</span>:
+      <span class="hljs-keyword">if</span> i == <span class="hljs-number">0</span>:
+        green
+      <span class="hljs-keyword">elif</span> i <span class="hljs-keyword">in</span> [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>]:
+        yellow
+      <span class="hljs-keyword">else</span>:
+        darkGray
+    <span class="hljs-keyword">if</span> word[i] != <span class="hljs-string">'_'</span>:
+      image2.addSquare(i, word[i], squareColor)
+
+  sizeFont = squareSide / <span class="hljs-number">3</span>
+  font = newFont(typeface, sizeFont, black)
+  <span class="hljs-keyword">let</span> text2 = <span class="hljs-string">&quot;UN GIOCO DI PAROLE AL GIORNO&quot;</span>
+  image2.fillText(font, text2, transform = translate(vec2(horizontalMargin, topMargin + squareSide + vertGap)), bounds = vec2(<span class="hljs-number">1080</span>, sizeFont), hAlign = haCenter, vAlign = vaMiddle)
+
+  <span class="hljs-keyword">let</span> flag = readImage(<span class="hljs-string">&quot;images/flag_italy.png&quot;</span>)
+
+  image2.draw(flag, translate(vec2(horizontalMargin + <span class="hljs-number">3</span>*squareSide + <span class="hljs-number">3</span>*gap, topMargin)))
+  image2.writeFile(<span class="hljs-string">&quot;images/parle_og_1200x630.png&quot;</span>)
+nbImage(<span class="hljs-string">&quot;images/parle_og_1200x630.png&quot;</span>)
+
+nbSave
+</code></pre>
+</section><script>
+function toggleSourceDisplay() {
+  var btn = document.getElementById("show")
+  var source = document.getElementById("source");
+  if (btn.innerHTML=="Show Source") {
+    btn.innerHTML = "Hide Source";
+    source.style.display = "block";
+  } else {
+    btn.innerHTML = "Show Source";
+    source.style.display = "none";
+  }
+}
+</script></body>
+</html>
