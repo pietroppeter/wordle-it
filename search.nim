@@ -47,7 +47,7 @@ barie ok: https://www.garzantilinguistica.it/ricerca/?q=baria
 borde ok: https://www.treccani.it/vocabolario/borda/
 borii: not found
 borio: voce verbale (io mi borio)
-borra ok: https://www.treccani.it/vocabolario/ricerca/borra/
+borre ok: https://www.treccani.it/vocabolario/ricerca/borra/
 dorie: not found
 norie ok: https://www.treccani.it/vocabolario/ricerca/noria/
 ]# 
