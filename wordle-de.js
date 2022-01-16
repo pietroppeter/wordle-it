@@ -979,7 +979,7 @@ this.wordle = this.wordle || {}, this.wordle.bundle = function(e) {
   function Na(e) {
       return $a(Ra, e)
   }
-  var Ha, Ga = "abcdefghijklmnopqrstuvwxyz";
+  var Ha, Ga = "abcdefghijklmnopqrstuvwxyzäöü";
 
   function Da() {
       dataLayer.push(arguments)
@@ -1292,9 +1292,9 @@ this.wordle = this.wordle || {}, this.wordle.bundle = function(e) {
   var is = document.createElement("template");
   is.innerHTML = '\n  <div class="spacer"></div>\n';
   var ls = [
-          ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
-          ["-", "a", "s", "d", "f", "g", "h", "j", "k", "l", "-"],
-          ["↵", "z", "x", "c", "v", "b", "n", "m", "←"]
+          ["q", "w", "e", "r", "t", "z", "u", "i", "o", "p", "ü", "-"],
+          ["-", "a", "s", "d", "f", "g", "h", "j", "k", "l", "ö", "ä"],
+          ["↵", "y", "x", "c", "v", "b", "n", "m", "←", "-"]
       ],
       ds = function(e) {
           n(t, e);
@@ -1343,7 +1343,7 @@ this.wordle = this.wordle || {}, this.wordle.bundle = function(e) {
                       var s = document.createElement("div");
                       s.classList.add("row"), a.forEach((function(e) {
                           var a;
-                          if (e >= "a" && e <= "z" || "←" === e || "↵" === e) {
+                          if (e >= "a" && e <= "z" || "ä" === e  || "ö" === e  || "ü" === e || "←" === e || "↵" === e) {
                               if ((a = ns.content.cloneNode(!0).firstElementChild).dataset.key = e, a.textContent = e, "←" === e) {
                                   var t = document.createElement("game-icon");
                                   t.setAttribute("icon", "backspace"), a.textContent = "", a.appendChild(t), a.classList.add("one-and-a-half")
