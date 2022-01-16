@@ -1,9 +1,23 @@
 import sequtils, strutils, strformat, random
 
-var puzzle_list: seq[string]
+var
+  puzzle_list: seq[string]
+  word_list: seq[string]
 puzzle_list = lines("small5.txt").toSeq
+echo "words in puzzle list: ", puzzle_list.len
 
-var word_list = lines("big5.txt").toSeq
+const removeFromWordList = @["dorie", "borii"]
+var
+  countTotal = 0
+  countKept = 0
+for word in lines("big5.txt"):
+  inc countTotal
+  if word notIn removeFromWordList:
+    word_list.add word
+    inc countKept
+
+echo "total words in word list: ", countTotal
+echo "  words kept in word list: ", countKept
 
 randomize(195)
 shuffle(puzzle_list)

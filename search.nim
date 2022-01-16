@@ -35,3 +35,19 @@ result = search(word, big)
 if result.contained:
   echo word, " in 📚"  
 echo "neighbours in 📚: ", result.neighbours
+
+#[
+nim r -d:release search borie
+borie in 📕
+neighbours in 📕: @["boria", "borse"]
+borie in 📚
+neighbours in 📚: @["barie", "borde", "boria", "borii", "borio", "borre", "borse", "dorie", "morie", "norie"]
+
+barie ok: https://www.garzantilinguistica.it/ricerca/?q=baria
+borde ok: https://www.treccani.it/vocabolario/borda/
+borii: not found
+borio: voce verbale (io mi borio)
+borra ok: https://www.treccani.it/vocabolario/ricerca/borra/
+dorie: not found
+norie ok: https://www.treccani.it/vocabolario/ricerca/noria/
+]# 
