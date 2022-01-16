@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-
+    
     <title>Wordle auf Deutsch</title>
     <meta name="description" content="Errate ein Wort in 6 Versuchen. Jeden Tag ein neues Rätsel">
-    
+
     <!-- FB Meta Tags -->
     <meta property="og:url" content="https://wordle-deutsch.ch">
     <meta property="og:type" content="website">
@@ -16,12 +16,12 @@
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="wordle-deutsch.ch">
+    <meta property="twitter:domain" content="powerlanguage.co.uk">
 
     <meta name="theme-color" content="#6aaa64" />
     <link rel="manifest" href="manifest.json" />
-    <link href="images/parle_logo_32x32.png" rel="icon shortcut" sizes="3232" />
-    <link href="images/parle_logo_192x192.png" rel="apple-touch-icon" />
+    <link href="images/wordle_logo_32x32.png" rel="icon shortcut" sizes="3232" />
+    <link href="images/wordle_logo_192x192.png" rel="apple-touch-icon" />
 
     <style>
       /* Global Styles & Colors */
@@ -111,23 +111,23 @@
       body {
         height: 100%;
         background-color: var(--color-background);
-        margin: 10;
-        padding: 10;
+        margin: 0;
+        padding: 0;
         /* Prevent scrollbar appearing on page transition */
         overflow-y: hidden;
       }
     </style>
   </head>
   <body>
-<h1>Hier entsteht eine deutsche Variante des WORDLE-Spiels.<br>Schauen Sie doch in ein paar Tagen noch einmal vorbei!</h1>
-<p>Dieses Spiel ist eine <b>einfache Kopie</b> der englischen Variante auf <a href=https://www.powerlanguage.co.uk/wordle>https://www.powerlanguage.co.uk/wordle</a>.<br>
-Copyright des Spiels liegt vollständig bei dessen Autor!</p>
-<p>Ausnahmen:</p>
-<ul>
-    <li>Extraktion des Quellcodes (und Übersetzung ins Italienische: <a href=https://github.com/pietroppeter/wordle-it>Pietro Peterlongo</a></li>
-    <li>Übersetzung ins Deutsche, Unterhalt dieser Webseite (Siehe <a href=https://github.com/caco3/wordle-de>https://github.com/caco3/wordle-de</a>)</li>
-    <li>Sprachdateien: tbd.</li>
-</ul>
-<p>Diese Webseite wird vorerst gratis und werbefrei bleiben.</p>
+<!--     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2SSGMHY3NP"></script> -->
+    <script>
+      (function () {
+        // Defining the hash before the main bundle allows the bundle access window.hash
+        window.wordle = window.wordle || {};
+        window.wordle.hash = 'wordle-de';
+      })();
+    </script>
+    <script src="wordle-de.js"></script>
+    <game-app></game-app>
   </body>
 </html>
