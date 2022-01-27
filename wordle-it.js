@@ -1347,7 +1347,7 @@ this.wordle = this.wordle || {}, this.wordle.bundle = function(e) {
                                   var t = document.createElement("game-icon");
                                   t.setAttribute("icon", "backspace"), a.textContent = "", a.appendChild(t), a.classList.add("one-and-a-half")
                               }
-                              "↵" == e && (a.textContent = "enter", a.classList.add("one-and-a-half"))
+                              "↵" == e && (a.textContent = "invio", a.classList.add("one-and-a-half"))
                           } else(a = is.content.cloneNode(!0).firstElementChild).classList.add(1 === e.length ? "half" : "one");
                           s.appendChild(a)
                       })), e.$keyboard.appendChild(s)
