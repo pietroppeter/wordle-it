@@ -2,7 +2,7 @@ import sequtils, strutils, strformat, random
 
 var
   word_list: seq[string] 
-  puzzle_list: seq[string]
+  puzzle_list*: seq[string]
 
 const
   alphabet = toSeq("abcdefghijklmnopqrstuvwxyz")
