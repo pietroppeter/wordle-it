@@ -53,8 +53,8 @@ when defined(findOncia):
       echo i
     inc i
 
-writeFile("itLines.js"): &"""
+when isMainModule:
+  writeFile("itLines.js"): &"""
   var Aa = [{shuffled_as_list}],
       La = [{words_as_list}],
 """
-  
