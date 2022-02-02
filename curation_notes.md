@@ -10,4 +10,4 @@ Il 14 Febbraio ci sarà la parola "dinne" che vorrei evitare. quindi tocca final
 * ricordarsi di aggiungere parole che finiscono in consonante (e.g hotel)
 * la data di riferimento di partenza cambierà è partira in modo che la prima parola il primo gennaio sia "Oncia". Aggiungerò n° alla condivisione per rendere esplicito il cambio
 
-* parole accentate cosa fare lascio? (e.g. caffe, citta)
+* parole accentate cosa fare lascio? (e.g. caffe, citta). non tra le curate ma lascio nel dizionario.
