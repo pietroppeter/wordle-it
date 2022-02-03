@@ -23,3 +23,5 @@ cose da fare:
 - [ ] per le stanghe vale la pena verificare anche altre parole presenti nel dizionario esteso ed eliminare quelle inesistenti
 - [ ] confronto con dizionario di parolette
 - [ ] parole fisse (quelle passate + 2-3 nel futuro), da aggiornare subito prima del rilascio
+- [ ] confronto con parole fisse (verificare che ci siano)
+- [ ] statistiche sulle lettere (e sulle distanze)
