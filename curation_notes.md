@@ -14,3 +14,12 @@ Il 14 Febbraio ci sarà la parola "dinne" che vorrei evitare. quindi tocca final
 * messi anche termini scientifici
 * nomi di animali anche esotici (eg. okapi)
 * qualche nome geografico (curdo, egizi, masai)
+
+cose da fare:
+- [ ] controllare siano in ordine e senza doppioni
+- [ ] funzione distanza
+- [ ] mettere constraint su distanza tra parole successive (e.g. dist > 2 per parole successive, niente parole con dist = 1 nell'arco di due settimane)
+- [ ] quante "stanghe" ci sono? dove una stanga è un insieme di parole in cui solo una lettera cambia (sempre la stessa) e l'insieme ha cardinalità almeno 5. 
+- [ ] per le stanghe vale la pena verificare anche altre parole presenti nel dizionario esteso ed eliminare quelle inesistenti
+- [ ] confronto con dizionario di parolette
+- [ ] parole fisse (quelle passate + 2-3 nel futuro), da aggiornare subito prima del rilascio
