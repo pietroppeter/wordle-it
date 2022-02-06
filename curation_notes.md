@@ -17,6 +17,7 @@ Il 14 Febbraio ci sarà la parola "dinne" che vorrei evitare. quindi tocca final
 
 cose da fare:
 - [ ] controllare siano in ordine e senza doppioni
+- [ ] aggiungere parole che finiscono per consonanti (hotel, nobel, oscar, ...)
 - [ ] funzione distanza
 - [ ] mettere constraint su distanza tra parole successive (e.g. dist > 2 per parole successive, niente parole con dist = 1 nell'arco di due settimane)
 - [ ] quante "stanghe" ci sono? dove una stanga è un insieme di parole in cui solo una lettera cambia (sempre la stessa) e l'insieme ha cardinalità almeno 5. 
@@ -25,3 +26,11 @@ cose da fare:
 - [ ] parole fisse (quelle passate + 2-3 nel futuro), da aggiornare subito prima del rilascio
 - [ ] confronto con parole fisse (verificare che ci siano)
 - [ ] statistiche sulle lettere (e sulle distanze)
+
+
+altri file:
+- removed.txt rimuove parole dalla word list
+- add.txt aggiunge parole alla word list
+- la word list totale è: curated + big5 - removed + add
+- le parole soluzioni sono tutte e sole quelle di curated
+- fixed.txt sono le prime parole da usare e devono essere presenti in curated
