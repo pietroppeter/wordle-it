@@ -1141,6 +1141,7 @@ scavo
 scemi
 scena
 sceso
+schwa
 sciai
 scolo
 scopa
