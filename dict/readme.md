@@ -16,4 +16,6 @@ dev notes:
   - [ ] command line tool to playtest list of words (play)
   - [ ] check against dictionary of parolette?
   - [ ] make sure plausible is added (given nimib configuration needed for dictionary paths) or change nimib config and filename paths
-- [ ] document that summarizes curation process (e.g. curation_notes.md)  
+- [ ] document that summarizes curation process (e.g. curation_notes.md)
+- [ ] add versioning in wordle code (release as 0.what? or 1.0?)
+- [ ] change start date in wordle code
