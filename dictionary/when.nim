@@ -16,4 +16,4 @@ when isMainModule:
       echo word, " not found"
     else:
       d = fixedDate + (i - fixedIndex).days
-      echo word, " in ", (i - fixedIndex), " days: ", d
+      echo word, " ", (i - fixedIndex), " days after ", fixedWord, " on ", d

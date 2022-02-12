@@ -1,0 +1,2 @@
+- [x] move all dictionary related code and data here
+- [ ] a nimib document that performs all the step to generate the dictionaries starting from sources
