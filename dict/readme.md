@@ -17,8 +17,8 @@ dev notes:
     - [x] check fixed is contained in curated
   - [x] check against dictionary of parolette
   - [x] make sure plausible is added: change nimib config and filename paths
-  - [ ] generation of final list of words (parole.txt) using also fixed words
-  - [ ] generate itLines.js
+  - [x] generation of final list of words (parole.txt) using also fixed words
+  - [x] generate itLines.js
 - [ ] command line tool to playtest list of words (play)
 - [ ] document that summarizes curation process (e.g. curation_notes.md)
 - [ ] changes in wordle (only test version)

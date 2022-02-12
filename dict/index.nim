@@ -1,4 +1,4 @@
-import nimib, std / [strformat, sequtils, strutils, sugar, setutils, sets, algorithm]
+import nimib, std / [strformat, sequtils, strutils, sugar, setutils, sets, algorithm, random]
 
 # todo: set Italian language in Nimib
 nbInit
@@ -203,6 +203,28 @@ nbCode:
   dump len(wordList)
   checkContained curated, wordList # almost obvious
   writeFile(filenameWordList, wordList.join("\n"))  
+
+nbText: """## 4. Generate list of solution words """
+
+nbCode:
+  var paroleFuture = toSeq(curatedSet - fixedSet)
+  randomize(202)
+  shuffle(paroleFuture)
+  let
+    parole = fixed & paroleFuture
+  writeFile(filenameParole, parole.join("\n"))
+  assert len(parole) == len(curated)
+
+nbText: """## 5. Generate itLines.js"""
+
+nbCode:
+  let
+    paroleForJs = parole.mapIt(&"\"{it}\"").join(", ")
+    wordListForJs = (wordListSet - curatedSet).toSeq.sorted
+  writeFile(filenameItLines): &"""
+  var Aa = [{paroleForJs}],
+      La = [{wordListForJs}],
+"""
 
 nbText: """# Nim(ib) notes
 
