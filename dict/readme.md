@@ -14,7 +14,7 @@ dev notes:
     - [x] check all files have no doubles
     - [x] check small5, big5, hotel are sorted
     - [x] check curated is sorted (had to fix stuff)
-    - [ ] check fixed is contained in curated
+    - [x] check fixed is contained in curated
   - [ ] refactor generation of final list of words (parole.txt) using also fixed words
   - [ ] command line tool to playtest list of words (play)
   - [ ] check against dictionary of parolette?

@@ -148,7 +148,7 @@ nbCode:
     if isSorted:
       echo `filename ident`, " is sorted"
     else:
-      echo `filename ident`, " is NOT sorted"
+      echo "[ERROR]", `filename ident`, " is NOT sorted"
 
   template checkContained(identA, identB: untyped) =
     var isContained = true
@@ -159,7 +159,7 @@ nbCode:
     if isContained:
       echo `filename identA`, " is contained in ", `filename identB`
     else:
-      echo `filename identA`, " is NOT contained in ", `filename identB`
+      echo "[ERROR]", `filename identA`, " is NOT contained in ", `filename identB`
 
   make small5
   checkIsSorted small5
@@ -173,6 +173,11 @@ nbCode:
   make fixed
 
   checkContained fixed, curated
+  # checkContained small5, big5 # not expected to happen (and it does not happen)
+
+  make addToWordList
+  make removeFromWordList
+  checkContained removeFromWordList, big5
 
 nbText: """# Nim(ib) notes
 

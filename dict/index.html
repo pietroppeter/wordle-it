@@ -163,7 +163,7 @@ data scelta un po' per caso ed un po' per sbaglio)</li>
   <span class="hljs-keyword">if</span> isSorted:
     <span class="hljs-keyword">echo</span> `filename ident`, <span class="hljs-string">&quot; is sorted&quot;</span>
   <span class="hljs-keyword">else</span>:
-    <span class="hljs-keyword">echo</span> `filename ident`, <span class="hljs-string">&quot; is NOT sorted&quot;</span>
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;[ERROR]&quot;</span>, `filename ident`, <span class="hljs-string">&quot; is NOT sorted&quot;</span>
 
 <span class="hljs-keyword">template</span> checkContained(identA, identB: <span class="hljs-built_in">untyped</span>) =
   <span class="hljs-keyword">var</span> isContained = <span class="hljs-literal">true</span>
@@ -174,7 +174,7 @@ data scelta un po' per caso ed un po' per sbaglio)</li>
   <span class="hljs-keyword">if</span> isContained:
     <span class="hljs-keyword">echo</span> `filename identA`, <span class="hljs-string">&quot; is contained in &quot;</span>, `filename identB`
   <span class="hljs-keyword">else</span>:
-    <span class="hljs-keyword">echo</span> `filename identA`, <span class="hljs-string">&quot; is NOT contained in &quot;</span>, `filename identB`
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;[ERROR]&quot;</span>, `filename identA`, <span class="hljs-string">&quot; is NOT contained in &quot;</span>, `filename identB`
 
 make small5
 checkIsSorted small5
@@ -187,36 +187,24 @@ make curated
 checkIsSorted curated
 make fixed
 
-checkContained fixed, curated</code></pre><pre><samp>dict/small5.txt: 2510
+checkContained fixed, curated
+<span class="hljs-comment"># checkContained small5, big5 # not expected to happen (and it does not happen)</span>
+
+make addToWordList
+make removeFromWordList
+checkContained removeFromWordList, big5</code></pre><pre><samp>dict/small5.txt: 2510
 dict/small5.txt is sorted
 dict/big5.txt: 7910
 dict/big5.txt is sorted
 dict/hotels.txt: 1281
 dict/hotels.txt is sorted
-dict/curated.txt: 1492
+dict/curated.txt: 1496
 dict/curated.txt is sorted
 dict/fixed.txt: 42
-borie not in dict/curated.txt
-scali not in dict/curated.txt
-rozza not in dict/curated.txt
-punti not in dict/curated.txt
-fogne not in dict/curated.txt
-mandi not in dict/curated.txt
-puzzi not in dict/curated.txt
-crepe not in dict/curated.txt
-disto not in dict/curated.txt
-eredi not in dict/curated.txt
-corra not in dict/curated.txt
-ritmi not in dict/curated.txt
-porge not in dict/curated.txt
-lorde not in dict/curated.txt
-panno not in dict/curated.txt
-snodi not in dict/curated.txt
-sugli not in dict/curated.txt
-nuovo not in dict/curated.txt
-dirmi not in dict/curated.txt
-umana not in dict/curated.txt
-dict/fixed.txt is NOT contained in dict/curated.txt</samp></pre>
+dict/fixed.txt is contained in dict/curated.txt
+dict/word_list_add.txt: 80
+dict/word_list_remove.txt: 167
+dict/word_list_remove.txt is contained in dict/big5.txt</samp></pre>
 <h1>Nim(ib) notes</h1>
 <p>These notes may be of interest to you only if you know what Nim and Nimib are
 (language and library used to generate this document).</p>
@@ -384,7 +372,7 @@ nbCode:
     <span class="hljs-keyword">if</span> isSorted:
       <span class="hljs-keyword">echo</span> `filename ident`, <span class="hljs-string">&quot; is sorted&quot;</span>
     <span class="hljs-keyword">else</span>:
-      <span class="hljs-keyword">echo</span> `filename ident`, <span class="hljs-string">&quot; is NOT sorted&quot;</span>
+      <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;[ERROR]&quot;</span>, `filename ident`, <span class="hljs-string">&quot; is NOT sorted&quot;</span>
 
   <span class="hljs-keyword">template</span> checkContained(identA, identB: <span class="hljs-built_in">untyped</span>) =
     <span class="hljs-keyword">var</span> isContained = <span class="hljs-literal">true</span>
@@ -395,7 +383,7 @@ nbCode:
     <span class="hljs-keyword">if</span> isContained:
       <span class="hljs-keyword">echo</span> `filename identA`, <span class="hljs-string">&quot; is contained in &quot;</span>, `filename identB`
     <span class="hljs-keyword">else</span>:
-      <span class="hljs-keyword">echo</span> `filename identA`, <span class="hljs-string">&quot; is NOT contained in &quot;</span>, `filename identB`
+      <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;[ERROR]&quot;</span>, `filename identA`, <span class="hljs-string">&quot; is NOT contained in &quot;</span>, `filename identB`
 
   make small5
   checkIsSorted small5
@@ -409,6 +397,11 @@ nbCode:
   make fixed
 
   checkContained fixed, curated
+  <span class="hljs-comment"># checkContained small5, big5 # not expected to happen (and it does not happen)</span>
+
+  make addToWordList
+  make removeFromWordList
+  checkContained removeFromWordList, big5
 
 nbText: <span class="hljs-string">&quot;&quot;&quot;# Nim(ib) notes
 

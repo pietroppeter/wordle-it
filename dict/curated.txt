@@ -175,6 +175,7 @@ bollo
 bomba
 bordi
 borgo
+borie
 borsa
 bosco
 botte
@@ -334,7 +335,7 @@ coque
 corda
 corna
 corpo
-corri
+corra
 corsa
 corso
 corte
@@ -354,8 +355,7 @@ crasi
 creai
 credo
 crema
-crepa
-crepi
+crepe
 creta
 crisi
 croce
@@ -400,8 +400,10 @@ dillo
 dimmi
 diodo
 direi
+dirmi
 disco
 disfa
+disto
 ditta
 docce
 doghe
@@ -445,7 +447,7 @@ epica
 epoca
 epuro
 erano
-erede
+eredi
 eremo
 erica
 erigo
@@ -527,7 +529,7 @@ flora
 fobia
 foche
 fogli
-fogna
+fogne
 foibe
 folla
 folle
@@ -708,7 +710,7 @@ liuto
 lizza
 lombi
 lonza
-lordo
+lorde
 losco
 lotta
 lotti
@@ -731,7 +733,7 @@ mamba
 mamma
 manca
 mance
-mando
+mandi
 manga
 mangi
 mania
@@ -835,7 +837,7 @@ nulla
 nuoce
 nuora
 nuoto
-nuova
+nuovo
 nutre
 obesi
 obice
@@ -907,7 +909,7 @@ pance
 panda
 panna
 panne
-panni
+panno
 pappa
 parco
 pareo
@@ -997,6 +999,7 @@ pongo
 ponte
 poppa
 porci
+porge
 porre
 porro
 porta
@@ -1032,9 +1035,9 @@ pulce
 pulsa
 punge
 punta
-punto
+punti
 purga
-puzza
+puzzi
 quale
 quasi
 quota
@@ -1078,7 +1081,7 @@ righe
 rione
 risma
 rissa
-ritmo
+ritmi
 ritto
 riuso
 rocca
@@ -1096,7 +1099,7 @@ rosea
 rospo
 rossa
 rotta
-rozzo
+rozza
 rubai
 rubli
 rughe
@@ -1141,7 +1144,7 @@ sbuca
 scade
 scafo
 scala
-scalo
+scali
 scavo
 scemi
 scena
@@ -1203,7 +1206,7 @@ slavi
 slego
 slogo
 smise
-snodo
+snodi
 soave
 sobri
 socio
@@ -1262,6 +1265,7 @@ sturo
 succo
 sudai
 sughi
+sugli
 sugna
 suino
 sulle
@@ -1384,7 +1388,7 @@ uggia
 ugola
 ulivo
 ulula
-umano
+umana
 umida
 umile
 umore
