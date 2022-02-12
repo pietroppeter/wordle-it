@@ -38,6 +38,8 @@ aglio
 agone
 aiuto
 alate
+album
+alcol
 alghe
 alibi
 alice
@@ -109,6 +111,7 @@ avuto
 avvio
 azero
 azoto
+babau
 babbo
 bacca
 bachi
@@ -633,6 +636,7 @@ guida
 gusci
 gusto
 hanno
+hotel
 icona
 idolo
 iella
@@ -1052,6 +1056,7 @@ reale
 reame
 reato
 rebbi
+rebus
 recai
 regia
 reggo
@@ -1235,6 +1240,7 @@ spiga
 spine
 spira
 spola
+sport
 sposi
 spuma
 sputo
@@ -1445,6 +1451,7 @@ vinti
 vinse
 viola
 viole
+virus
 vispa
 visse
 vista

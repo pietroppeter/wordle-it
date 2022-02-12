@@ -43,11 +43,12 @@ I due dizionari sorgente sono usati per generare i dizionari usati dal gioco, ov
 Il processo di generazione prevede i seguenti passi:
 
 1. estrarre le parole di 5 lettere dai dizionari piccolo e grande, limitandosi
-   alle parole che finiscono in vocale (il dizionario piccolo contiene radici di lemmi come _ripar_ o simili).
+   alle parole che finiscono in una vocale, tranne la u
+   (il dizionario piccolo contiene radici di lemmi come _ripar_ o simili).
    Il risultato (in ordine alfabetico) è salvato in `{filenameSmall5}` e `{filenameBig5}`.
-   Estrarre dai dizionari le parole di 5 lettere che finiscono in consonante (e.g. hotel, ...)
+   Estrarre dai dizionari le parole di 5 lettere che finiscono in consonante o in u (e.g. hotel, ...)
    e salvarle in `{filenameHotel}`
-2. il dizionario `curated.txt` è costruito manualmente a partire dai dizionari fin qui generati.
+2. il dizionario `{filenameCurated}` è costruito manualmente a partire dai dizionari fin qui generati.
    Il processo di selezione delle possibili soluzioni è descritto in un documento a parte.
    contestualmente sono creati manualmente due dizionari `{filenameAddToWordList}`
    e `{filenameRemoveFromWordList}` che serviranno
@@ -77,6 +78,8 @@ Il processo è cambiato nel tempo:
 
 Il resto del documento (in inglese) contiene il codice che implementa il processo e può contenere qualche lieve spoiler.
 
+# Implementation
+
 ## 0. Filenames
 
 All filenames used
@@ -103,14 +106,14 @@ nbCode:
 nbCode:
   const
     alphabet = toSet("abcdefghijklmnopqrstuvwxyz")
-    vowels = toSet("aeio")
-    consonants = alphabet - vowels
+    commonEndings = toSet("aeio")
+    otherEndings = alphabet - commonEndings
 
   func buona(word: string): bool =
-    len(word) == 5 and toSet(word) <= alphabet and word[^1] in vowels
+    len(word) == 5 and toSet(word) <= alphabet and word[^1] in commonEndings
 
   func hotel(word: string): bool =
-    len(word) == 5 and toSet(word) <= alphabet and word[^1] in consonants
+    len(word) == 5 and toSet(word) <= alphabet and word[^1] in otherEndings
 
   echo filterFile(filenameSmallSource, filenameSmall5, buona)
   echo filterFile(filenameBigSource, filenameBig5, buona)

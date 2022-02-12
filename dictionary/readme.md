@@ -8,10 +8,12 @@ dev notes:
     - [x] filterFile
     - [x] big5, small5
     - [x] hotel
-  - [ ] curate words that end with consonant
+  - [x] curate words that end with consonant
+  - [ ] checks for manually generated dictionaries (in alph order, no doubles, contained in other dicts, ...)
   - [ ] refactor generation of final list of words
   - [ ] generate dictionary of fixed words (and use it for final generation)
   - [ ] handle words that ends in consonants
   - [ ] command line tool to playtest list of words (play)
   - [ ] check against dictionary of parolette?
+  - [ ] make sure plausible is added (given nimib configuration needed for dictionary paths) or change nimib config and filename paths
 - [ ] document that summarizes curation process (e.g. curation_notes.md)  

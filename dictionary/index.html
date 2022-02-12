@@ -59,9 +59,10 @@ data del gioco (contiene tutte e sole le parole di <code>curated.txt</code> in o
 <p>Il processo di generazione prevede i seguenti passi:</p>
 <ol>
 <li>estrarre le parole di 5 lettere dai dizionari piccolo e grande, limitandosi
-alle parole che finiscono in vocale (il dizionario piccolo contiene radici di lemmi come <em>ripar</em> o simili).
+alle parole che finiscono in una vocale, tranne la u
+(il dizionario piccolo contiene radici di lemmi come <em>ripar</em> o simili).
 Il risultato (in ordine alfabetico) è salvato in <code>small5.txt</code> e <code>big5.txt</code>.
-Estrarre dai dizionari le parole di 5 lettere che finiscono in consonante (e.g. hotel, ...)
+Estrarre dai dizionari le parole di 5 lettere che finiscono in consonante o in u (e.g. hotel, ...)
 e salvarle in <code>hotels.txt</code></li>
 <li>il dizionario <code>curated.txt</code> è costruito manualmente a partire dai dizionari fin qui generati.
 Il processo di selezione delle possibili soluzioni è descritto in un documento a parte.
@@ -121,20 +122,23 @@ data scelta un po' per caso ed un po' per sbaglio)</li>
   writeFile(dest): outLines.join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>)</code></pre>
 <pre><code class="nim hljs"><span class="hljs-keyword">const</span>
   alphabet = toSet(<span class="hljs-string">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span>)
-  vowels = toSet(<span class="hljs-string">&quot;aeio&quot;</span>)
-  consonants = alphabet - vowels
+  commonEndings = toSet(<span class="hljs-string">&quot;aeio&quot;</span>)
+  otherEndings = alphabet - commonEndings
 
 <span class="hljs-keyword">func</span> buona(word: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">bool</span> =
-  len(word) == <span class="hljs-number">5</span> <span class="hljs-keyword">and</span> toSet(word) &lt;= alphabet <span class="hljs-keyword">and</span> word[^<span class="hljs-number">1</span>] <span class="hljs-keyword">in</span> vowels
+  len(word) == <span class="hljs-number">5</span> <span class="hljs-keyword">and</span> toSet(word) &lt;= alphabet <span class="hljs-keyword">and</span> word[^<span class="hljs-number">1</span>] <span class="hljs-keyword">in</span> commonEndings
 
 <span class="hljs-keyword">func</span> hotel(word: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">bool</span> =
-  len(word) == <span class="hljs-number">5</span> <span class="hljs-keyword">and</span> toSet(word) &lt;= alphabet <span class="hljs-keyword">and</span> word[^<span class="hljs-number">1</span>] <span class="hljs-keyword">in</span> consonants
+  len(word) == <span class="hljs-number">5</span> <span class="hljs-keyword">and</span> toSet(word) &lt;= alphabet <span class="hljs-keyword">and</span> word[^<span class="hljs-number">1</span>] <span class="hljs-keyword">in</span> otherEndings
 
 <span class="hljs-keyword">echo</span> filterFile(filenameSmallSource, filenameSmall5, buona)
 <span class="hljs-keyword">echo</span> filterFile(filenameBigSource, filenameBig5, buona)
-<span class="hljs-keyword">echo</span> filterFile(filenameBigSource, filenameHotel, hotel)</code></pre><pre><samp>(sourceLines: 60453, destLines: 2510)
+
+<span class="hljs-keyword">echo</span> filterFile(filenameBigSource, filenameHotel, hotel)
+<span class="hljs-keyword">echo</span> filterFile(filenameSmallSource, <span class="hljs-string">&quot;hotel2.txt&quot;</span>, hotel)</code></pre><pre><samp>(sourceLines: 60453, destLines: 2510)
 (sourceLines: 4261494, destLines: 7910)
-(sourceLines: 4261494, destLines: 1281)</samp></pre>
+(sourceLines: 4261494, destLines: 1281)
+(sourceLines: 60453, destLines: 222)</samp></pre>
 <h1>Nim(ib) notes</h1>
 <p>These notes may be of interest to you only if you know what Nim and Nimib are
 (language and library used to generate this document).</p>
@@ -197,11 +201,12 @@ I due dizionari sorgente sono usati per generare i dizionari usati dal gioco, ov
 Il processo di generazione prevede i seguenti passi:
 
 1. estrarre le parole di 5 lettere dai dizionari piccolo e grande, limitandosi
-   alle parole che finiscono in vocale (il dizionario piccolo contiene radici di lemmi come _ripar_ o simili).
+   alle parole che finiscono in una vocale, tranne la u
+   (il dizionario piccolo contiene radici di lemmi come _ripar_ o simili).
    Il risultato (in ordine alfabetico) è salvato in `{filenameSmall5}` e `{filenameBig5}`.
-   Estrarre dai dizionari le parole di 5 lettere che finiscono in consonante (e.g. hotel, ...)
+   Estrarre dai dizionari le parole di 5 lettere che finiscono in consonante o in u (e.g. hotel, ...)
    e salvarle in `{filenameHotel}`
-2. il dizionario `curated.txt` è costruito manualmente a partire dai dizionari fin qui generati.
+2. il dizionario `{filenameCurated}` è costruito manualmente a partire dai dizionari fin qui generati.
    Il processo di selezione delle possibili soluzioni è descritto in un documento a parte.
    contestualmente sono creati manualmente due dizionari `{filenameAddToWordList}`
    e `{filenameRemoveFromWordList}` che serviranno
@@ -253,22 +258,24 @@ nbCode:
         outLines.add line
     writeFile(dest): outLines.join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>)
 
-<span class="hljs-comment"># first time I am using toSet from std / setutils</span>
+<span class="hljs-comment"># first time I am using toSet from std / setutils (did not know that module existed)</span>
 nbCode:
   <span class="hljs-keyword">const</span>
     alphabet = toSet(<span class="hljs-string">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span>)
-    vowels = toSet(<span class="hljs-string">&quot;aeio&quot;</span>)
-    consonants = alphabet - vowels
+    commonEndings = toSet(<span class="hljs-string">&quot;aeio&quot;</span>)
+    otherEndings = alphabet - commonEndings
 
   <span class="hljs-keyword">func</span> buona(word: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">bool</span> =
-    len(word) == <span class="hljs-number">5</span> <span class="hljs-keyword">and</span> toSet(word) &lt;= alphabet <span class="hljs-keyword">and</span> word[^<span class="hljs-number">1</span>] <span class="hljs-keyword">in</span> vowels
+    len(word) == <span class="hljs-number">5</span> <span class="hljs-keyword">and</span> toSet(word) &lt;= alphabet <span class="hljs-keyword">and</span> word[^<span class="hljs-number">1</span>] <span class="hljs-keyword">in</span> commonEndings
 
   <span class="hljs-keyword">func</span> hotel(word: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">bool</span> =
-    len(word) == <span class="hljs-number">5</span> <span class="hljs-keyword">and</span> toSet(word) &lt;= alphabet <span class="hljs-keyword">and</span> word[^<span class="hljs-number">1</span>] <span class="hljs-keyword">in</span> consonants
+    len(word) == <span class="hljs-number">5</span> <span class="hljs-keyword">and</span> toSet(word) &lt;= alphabet <span class="hljs-keyword">and</span> word[^<span class="hljs-number">1</span>] <span class="hljs-keyword">in</span> otherEndings
 
   <span class="hljs-keyword">echo</span> filterFile(filenameSmallSource, filenameSmall5, buona)
   <span class="hljs-keyword">echo</span> filterFile(filenameBigSource, filenameBig5, buona)
+
   <span class="hljs-keyword">echo</span> filterFile(filenameBigSource, filenameHotel, hotel)
+  <span class="hljs-keyword">echo</span> filterFile(filenameSmallSource, <span class="hljs-string">&quot;hotel2.txt&quot;</span>, hotel)
 
 nbText: <span class="hljs-string">&quot;&quot;&quot;# Nim(ib) notes
 
