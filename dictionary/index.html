@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <title>dictionary/index.nim</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🐳</text></svg>">
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link rel='stylesheet' href='https://unpkg.com/normalize.css/'>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/pietroppeter/nimib/assets/atom-one-light.css'>
+  <style>
+.nb-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nb-small {
+  font-size: 0.8rem;
+}
+button.nb-small {
+  float: right;
+  padding: 2px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+section#source {
+  display:none
+}
+</style>
+  
+  <script defer data-domain="pietroppeter.github.io/wordle-it" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+<header>
+<div class="nb-box">
+  <span><a href="..">🏡</a></span>
+  <span><code>dictionary/index.nim</code></span>
+  <span><a href="https://github.com/pietroppeter/wordle-it"><svg aria-hidden="true" width="1.2em" height="1.2em" style="vertical-align: middle;" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59c.4.07.55-.17.55-.38c0-.19-.01-.82-.01-1.49c-2.01.37-2.53-.49-2.69-.94c-.09-.23-.48-.94-.82-1.13c-.28-.15-.68-.52-.01-.53c.63-.01 1.08.58 1.23.82c.72 1.21 1.87.87 2.33.66c.07-.52.28-.87.51-1.07c-1.78-.2-3.64-.89-3.64-3.95c0-.87.31-1.59.82-2.15c-.08-.2-.36-1.02.08-2.12c0 0 .67-.21 2.2.82c.64-.18 1.32-.27 2-.27c.68 0 1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82c.44 1.1.16 1.92.08 2.12c.51.56.82 1.27.82 2.15c0 3.07-1.87 3.75-3.65 3.95c.29.25.54.73.54 1.48c0 1.07-.01 1.93-.01 2.2c0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z" fill="#000"></path></svg></a></span>
+</div>
+<hr>
+</header><main>
+<h1>Dizionario di Par🇮🇹le</h1>
+<p>Il dizionario di Par🇮🇹le (o Parle) è basato su due dizionari disponibili pubblicamente.</p>
+<ul>
+<li>un dizionario &quot;piccolo&quot; di circa 60_000 parole (<code>60_000_parole.txt</code>)
+preso da <a href="https://github.com/napolux/paroleitaliane">napolux/paroleitaliane</a></li>
+<li>un dizionario &quot;grande&quot; di più di 4 milioni di parole (<code>dictionary.txt</code>)
+preso da <a href="https://github.com/sigmasaur/AnagramSolver">sigmasaur/AnagramSolver</a></li>
+</ul>
+<p>Questo documento viene usato per generare i dizionari finali usati da Parle
+e documentare il processo di generazione.</p>
+<p>Il processo è cambiato nel tempo:</p>
+<ul>
+<li>il dizionario piccolo è in uso dal 3 gennaio 2022 (giorno di nascita di Parle)</li>
+<li>il dizionario grande è in uso dal 4 gennaio 2022</li>
+<li>a partire dal 12 febbraio la numerazione delle parole è fatta a partire dal 3 gennaio
+(precedentemente la numerazione era fatta a partire dal 1 febbraio 2021,
+data scelta un po' per caso ed un po' per sbaglio)</li>
+<li>a partire dal 14 febbraio le parole da indovinare sono &quot;curate&quot;, ovvero è stato fatto un processo di selezione
+(precedentemente erano selezionate in modo casuale a partire dal dizionario piccolo)</li>
+</ul>
+<p>I due dizionari sono usati per generare i dizionari usati dal gioco, ovvero:</p>
+<ul>
+<li><code>soluzioni.txt</code>: dizionario che contiene in ordine alfabetico tutte le parole di 5 lettere che sono
+usate come parole da indovinare</li>
+<li><code>tentativi.txt</code>: dizionario che contiene in ordine alfabetico tutte le parole di 5 lettere che possono
+essere usate come tentativi (contiene le parole in <code>soluzioni.txt</code>)</li>
+<li><code>parole.txt</code>: dizionario che contiene l'ordine esatto delle parole da indovinare a partire dalla prima
+data del gioco</li>
+</ul>
+<p>Il processo di generazione prevede i seguenti passi:</p>
+<ol>
+<li>estrarre le parole di 5 lettere dai dizionari piccolo e grande, limitandosi
+alle parole che finiscono in vocale (il dizionario piccolo contiene radici di lemmi come <code>ripar</code> o simili).
+Il risultato (in ordine alfabetico) è salvato in <code>poche5.txt</code> e <code>tante5.txt</code>.
+Estrarre dai dizionari le parole di 5 lettere che finiscono in consonante e salvarle in <code>consonanti5.txt</code></li>
+<li>il dizionario <code>soluzioni.txt</code> è costruito manualmente a partire dai dizionari fin qui generati.
+Il processo di selezione delle possibili soluzioni è descritto in un documento a parte.
+contestualmente sono creati manualmente due dizionari <code>aggiunte.txt</code> e <code>rimosse.txt</code> che serviranno
+per generare il dizionario <code>tentativi.txt</code>.</li>
+<li>un dizionario <code>fisse.txt</code> è generato a partire dalla soluzioni già usate nel gioco per fissare le
+parole usate a partire dal primo 3 gennaio fino ad una data di modifica della lista di parole da indovinare.
+In particolare il dizionario <code>fisse.txt</code> è contenuto in <code>soluzioni.txt</code> ed è generato a partire dal
+dizionario generato nel prossimo passo.</li>
+<li>Il dizionario <code>parole.txt</code> è generato a partire dalle parole <code>fisse.txt</code> e dalle parole in <code>soluzioni.txt</code>
+con una generazione casuale</li>
+<li>Infine viene generato il file <code>itLines.js</code> con le linee di codice da usare nel codice affinché usi
+le liste di <code>parole.txt</code> e <code>tentativi.txt</code> generate fino a qui.</li>
+</ol>
+<p>Il resto del documento (in inglese) contiene il codice che implementa il processo e può contenere qualche lieve spoiler.</p>
+</main>
+<footer>
+<hr>
+<div class="nb-box">
+  <span><span class="nb-small">made with <a href="https://pietroppeter.github.io/nimib/">nimib 🐳</a></span></span>
+  <span></span>
+  <span><button class="nb-small" id="show" onclick="toggleSourceDisplay()">Show Source</button></span>
+</div>
+</footer>
+<section id="source">
+<pre><code class="nim hljs"><span class="hljs-keyword">import</span> nimib
+
+<span class="hljs-comment"># todo: set Italian language in Nimib</span>
+nbInit
+nbText: <span class="hljs-string">&quot;&quot;&quot; # Dizionario di Par🇮🇹le
+
+Il dizionario di Par🇮🇹le (o Parle) è basato su due dizionari disponibili pubblicamente.
+
+- un dizionario &quot;piccolo&quot; di circa 60_000 parole (`60_000_parole.txt`)
+  preso da [napolux/paroleitaliane](https://github.com/napolux/paroleitaliane)
+- un dizionario &quot;grande&quot; di più di 4 milioni di parole (`dictionary.txt`)
+  preso da [sigmasaur/AnagramSolver](https://github.com/sigmasaur/AnagramSolver)
+
+Questo documento viene usato per generare i dizionari finali usati da Parle
+e documentare il processo di generazione.
+
+Il processo è cambiato nel tempo:
+  - il dizionario piccolo è in uso dal 3 gennaio 2022 (giorno di nascita di Parle)
+  - il dizionario grande è in uso dal 4 gennaio 2022
+  - a partire dal 12 febbraio la numerazione delle parole è fatta a partire dal 3 gennaio
+    (precedentemente la numerazione era fatta a partire dal 1 febbraio 2021,
+    data scelta un po' per caso ed un po' per sbaglio)
+  - a partire dal 14 febbraio le parole da indovinare sono &quot;curate&quot;, ovvero è stato fatto un processo di selezione
+    (precedentemente erano selezionate in modo casuale a partire dal dizionario piccolo)
+
+I due dizionari sono usati per generare i dizionari usati dal gioco, ovvero:
+  - `soluzioni.txt`: dizionario che contiene in ordine alfabetico tutte le parole di 5 lettere che sono
+    usate come parole da indovinare
+  - `tentativi.txt`: dizionario che contiene in ordine alfabetico tutte le parole di 5 lettere che possono
+    essere usate come tentativi (contiene le parole in `soluzioni.txt`)
+  - `parole.txt`: dizionario che contiene l'ordine esatto delle parole da indovinare a partire dalla prima
+    data del gioco
+
+Il processo di generazione prevede i seguenti passi:
+
+1. estrarre le parole di 5 lettere dai dizionari piccolo e grande, limitandosi
+   alle parole che finiscono in vocale (il dizionario piccolo contiene radici di lemmi come `ripar` o simili).
+   Il risultato (in ordine alfabetico) è salvato in `poche5.txt` e `tante5.txt`.
+   Estrarre dai dizionari le parole di 5 lettere che finiscono in consonante e salvarle in `consonanti5.txt`
+2. il dizionario `soluzioni.txt` è costruito manualmente a partire dai dizionari fin qui generati.
+   Il processo di selezione delle possibili soluzioni è descritto in un documento a parte.
+   contestualmente sono creati manualmente due dizionari `aggiunte.txt` e `rimosse.txt` che serviranno
+   per generare il dizionario `tentativi.txt`.
+3. un dizionario `fisse.txt` è generato a partire dalla soluzioni già usate nel gioco per fissare le
+   parole usate a partire dal primo 3 gennaio fino ad una data di modifica della lista di parole da indovinare.
+   In particolare il dizionario `fisse.txt` è contenuto in `soluzioni.txt` ed è generato a partire dal
+   dizionario generato nel prossimo passo.
+4. Il dizionario `parole.txt` è generato a partire dalle parole `fisse.txt` e dalle parole in `soluzioni.txt`
+   con una generazione casuale
+5. Infine viene generato il file `itLines.js` con le linee di codice da usare nel codice affinché usi
+   le liste di `parole.txt` e `tentativi.txt` generate fino a qui.
+
+Il resto del documento (in inglese) contiene il codice che implementa il processo e può contenere qualche lieve spoiler.
+
+&quot;&quot;&quot;</span>
+nbSave</code></pre>
+</section><script>
+function toggleSourceDisplay() {
+  var btn = document.getElementById("show")
+  var source = document.getElementById("source");
+  if (btn.innerHTML=="Show Source") {
+    btn.innerHTML = "Hide Source";
+    source.style.display = "block";
+  } else {
+    btn.innerHTML = "Show Source";
+    source.style.display = "none";
+  }
+}
+</script></body>
+</html>
