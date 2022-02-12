@@ -39,3 +39,5 @@ when isMainModule:
   var Aa = [{shuffled_as_list}],
       La = [{words_as_list}],
 """
+
+  writeFile("parole_old.txt", puzzle_list.join("\n"))
