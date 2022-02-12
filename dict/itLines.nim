@@ -35,7 +35,8 @@ when defined(findOncia):
     inc i
 
 when isMainModule:
-  writeFile("itLines.js"): &"""
+  when false:
+    writeFile("itLines.js"): &"""
   var Aa = [{shuffled_as_list}],
       La = [{words_as_list}],
 """

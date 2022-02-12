@@ -10,15 +10,20 @@ dev notes:
     - [x] hotel
   - [x] curate words that end with consonant
   - [x] generate dictionary of fixed words
-  - [ ] checks for manually generated dictionaries (in alph order, no doubles, contained in other dicts, ...)
+  - [x] checks for manually generated dictionaries (in alph order, no doubles, contained in other dicts, ...)
     - [x] check all files have no doubles
     - [x] check small5, big5, hotel are sorted
     - [x] check curated is sorted (had to fix stuff)
     - [x] check fixed is contained in curated
-  - [ ] refactor generation of final list of words (parole.txt) using also fixed words
-  - [ ] command line tool to playtest list of words (play)
-  - [ ] check against dictionary of parolette?
+  - [x] check against dictionary of parolette
   - [x] make sure plausible is added: change nimib config and filename paths
+  - [ ] generation of final list of words (parole.txt) using also fixed words
+  - [ ] generate itLines.js
+- [ ] command line tool to playtest list of words (play)
 - [ ] document that summarizes curation process (e.g. curation_notes.md)
-- [ ] add versioning in wordle code (release as 0.what? or 1.0?)
-- [ ] change start date in wordle code
+- [ ] changes in wordle (only test version)
+  - [ ] merge current master with test version
+  - [ ] add versioning in wordle code (release as 0.what? or 1.0?)
+  - [ ] change start date in wordle code
+  - [ ] add n° to number
+- [ ] copy test into prod (after first PR is merged)

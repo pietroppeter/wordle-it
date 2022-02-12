@@ -9,8 +9,9 @@ Il 14 Febbraio ci sarà la parola "dinne" che vorrei evitare. quindi tocca final
 * aggiungerò un file past.txt che sarà usato per tenere la storia (dal 3 gennaio) fissa (e qualche giorno nel futuro
 * ricordarsi di aggiungere parole che finiscono in consonante (e.g hotel)
 * la data di riferimento di partenza cambierà è partira in modo che la prima parola il 3 gennaio sia "Oncia". Aggiungerò n° alla condivisione per rendere esplicito il cambio
-
-* parole accentate cosa fare lascio? (e.g. caffe, citta). non tra le curate ma lascio nel dizionario.
+* parole dialettali no
+* poche e selezionate parole straniere
+* parole accentate cosa fare lascio? (e.g. caffe, citta). non tra le curate (tranne una) ma lascio nel dizionario.
 * messi anche termini scientifici
 * nomi di animali anche esotici (eg. okapi)
 * qualche nome geografico (curdo, egizi, masai)

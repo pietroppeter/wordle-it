@@ -18,18 +18,24 @@ nbCode:
     filenameAddToWordList = folderDict & "word_list_add.txt"
     filenameRemoveFromWordList = folderDict & "word_list_remove.txt"
     filenameFixed = folderDict & "fixed.txt"
+    filenameParolette = folderDict & "parolette.txt"
+    filenameParoletteIdeas = folderDict & "parolette_ideas.txt"
     filenameItLines = folderDict & "itLines.js"
+    linkParolette = "[parolette](https://parolette.netlify.app)"
 
 let blockFilename = nb.blocks.pop
 
 nbText: &""" # Dizionario di Par🇮🇹le
 
-Il dizionario di Par🇮🇹le (o Parle) è basato su due dizionari disponibili pubblicamente.
+Il dizionario di Par🇮🇹le (o Parle) è basato su dizionari disponibili pubblicamente.
 
 - un dizionario "piccolo" di circa 60_000 parole (`{filenameSmallSource}`)
   preso da [napolux/paroleitaliane](https://github.com/napolux/paroleitaliane)
 - un dizionario "grande" di più di 4 milioni di parole (`{filenameBigSource}`)
   preso da [sigmasaur/AnagramSolver](https://github.com/sigmasaur/AnagramSolver)
+
+Inoltre il dizionario usato da {linkParolette} è stato usato come fonte di ulteriore
+idee da aggiungere.
 
 Questo documento spiega ed implementa il processo di generazione dei dizionari usati da Parle.
 
@@ -178,6 +184,25 @@ nbCode:
   make addToWordList
   make removeFromWordList
   checkContained removeFromWordList, big5
+
+nbText: &"""dictionary from italian version of wordle {linkParolette}
+is used to generated more ideas that have been incorporated in the curated dictionary (or in word list)."""
+
+nbCode:
+  make parolette
+  let wordIdeas = sorted(toSeq(paroletteSet - curatedSet - big5Set))
+  dump len(wordIdeas)
+  writeFile(filenameParoletteIdeas, wordIdeas.join("\n"))  
+
+nbText: """Generation of final word list"""
+
+nbCode:
+  let
+    wordListSet = curatedSet + big5Set + addToWordListSet - removeFromWordListSet
+    wordList = sorted(toSeq(wordListSet))
+  dump len(wordList)
+  checkContained curated, wordList # almost obvious
+  writeFile(filenameWordList, wordList.join("\n"))  
 
 nbText: """# Nim(ib) notes
 

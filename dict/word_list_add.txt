@@ -8,10 +8,15 @@ atout
 audit
 babau
 bagel
+bambu
 bantu
 bazar
 bebop
+belta
 bidet
+bigne
+blitz
+bonta
 colon
 covid
 derby
@@ -76,5 +81,6 @@ trans
 troll
 tutor
 virus
+virtu
 xenon
 zenit

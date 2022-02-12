@@ -50,9 +50,7 @@ alveo
 alzai
 amaca
 amala
-amano
 amaro
-amati
 amato
 amavo
 ambra
@@ -127,6 +125,8 @@ balle
 ballo
 balsa
 balzo
+bambu
+banca
 banco
 bande
 barai
@@ -141,6 +141,7 @@ basta
 basto
 batte
 baule
+bazar
 bazza
 beato
 becco
@@ -154,7 +155,9 @@ beone
 berci
 berlo
 biada
+bidet
 bieco
+bieta
 bigia
 bimba
 bioma
@@ -173,12 +176,14 @@ bocce
 bolla
 bollo
 bomba
+bongo
 bordi
 borgo
 borie
 borsa
 bosco
 botte
+botti
 bozza
 brace
 brado
@@ -225,6 +230,7 @@ calva
 calze
 cambi
 cameo
+camma
 campa
 campo
 canea
@@ -232,6 +238,7 @@ canna
 canoa
 canto
 capii
+cappa
 capra
 cardo
 cargo
@@ -302,6 +309,7 @@ clero
 clima
 clone
 cloro
+clown
 cobra
 cocci
 cocco
@@ -314,6 +322,7 @@ colla
 collo
 colma
 colmo
+colon
 colpe
 colpi
 colse
@@ -323,6 +332,7 @@ colza
 comma
 conca
 conci
+conga
 conio
 conta
 conte
@@ -356,11 +366,14 @@ creai
 credo
 crema
 crepe
+crepi
 creta
+crine
 crisi
 croce
 croco
 croda
+croma
 cromo
 cruda
 cruna
@@ -376,6 +389,7 @@ curai
 curda
 curia
 curio
+curry
 curva
 daino
 dalia
@@ -393,6 +407,7 @@ desta
 detto
 diade
 diari
+dicco
 dieci
 dieta
 dighe
@@ -414,7 +429,9 @@ donna
 doppi
 dorma
 dorso
+dossi
 dotta
+draga
 drago
 droga
 drone
@@ -535,12 +552,14 @@ folla
 folle
 folto
 fondo
+fonte
 forca
 forma
 forno
 forra
 forse
 forte
+forum
 forza
 fosco
 fossa
@@ -550,6 +569,7 @@ frana
 frase
 frasi
 frate
+frega
 fregi
 fremo
 freno
@@ -603,6 +623,7 @@ gioia
 giova
 girai
 giuro
+glifo
 globo
 gnomo
 gnosi
@@ -616,13 +637,14 @@ gonfi
 gonna
 gonzo
 gorgo
+gotta
 gozzo
 gradi
 grafo
 grama
 grana
 grano
-grate
+grata
 grato
 grave
 greco
@@ -651,6 +673,7 @@ iodio
 iride
 isola
 istmo
+jeans
 kappa
 karma
 koala
@@ -668,6 +691,7 @@ largo
 larva
 lasci
 lasco
+laser
 latta
 latte
 lavai
@@ -708,6 +732,7 @@ litio
 litro
 liuto
 lizza
+lobby
 lombi
 lonza
 lorde
@@ -729,13 +754,13 @@ magro
 malga
 mallo
 malta
-mamba
+mambo
 mamma
 manca
 mance
 mandi
-manga
 mangi
+mango
 mania
 manna
 manto
@@ -777,6 +802,7 @@ miope
 mirto
 misto
 mitra
+modem
 mogio
 mogli
 molla
@@ -839,6 +865,7 @@ nuora
 nuoto
 nuovo
 nutre
+nylon
 obesi
 obice
 oblio
@@ -848,7 +875,6 @@ odino
 odore
 offro
 ogiva
-okapi
 oliai
 olive
 oltre
@@ -884,6 +910,7 @@ ostro
 otite
 ovaia
 ovale
+ovest
 ovile
 ovini
 ovulo
@@ -914,7 +941,6 @@ pappa
 parco
 pareo
 paria
-parka
 parlo
 parso
 parte
@@ -988,7 +1014,6 @@ poema
 poeta
 poggi
 polio
-polka
 pollo
 polpa
 polpo
@@ -1065,6 +1090,7 @@ reggo
 regia
 regio
 regno
+relax
 remai
 rende
 renna
@@ -1073,6 +1099,7 @@ resto
 retro
 retta
 retto
+ribes
 ricci
 ricco
 ridda
@@ -1084,6 +1111,7 @@ rissa
 ritmi
 ritto
 riuso
+robot
 rocca
 rocce
 roche
@@ -1158,6 +1186,7 @@ scova
 scudo
 scure
 scusa
+secca
 secco
 sedia
 seggi
@@ -1236,6 +1265,7 @@ spada
 spago
 sparo
 spazi
+speck
 spelo
 spera
 spesa
@@ -1243,6 +1273,7 @@ spiga
 spine
 spira
 spola
+spore
 sport
 sposi
 spuma
@@ -1268,9 +1299,9 @@ sughi
 sugli
 sugna
 suino
-sulle
 sunto
 suola
+suolo
 suono
 suore
 svago
@@ -1287,7 +1318,7 @@ talea
 tallo
 talpa
 tanfo
-tanga
+tango
 tanto
 tappe
 tappo
@@ -1362,6 +1393,7 @@ torve
 tosai
 tosse
 tosta
+totem
 tozza
 trama
 trave
