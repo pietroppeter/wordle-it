@@ -9,10 +9,13 @@ dev notes:
     - [x] big5, small5
     - [x] hotel
   - [x] curate words that end with consonant
+  - [x] generate dictionary of fixed words
   - [ ] checks for manually generated dictionaries (in alph order, no doubles, contained in other dicts, ...)
-  - [ ] refactor generation of final list of words
-  - [ ] generate dictionary of fixed words (and use it for final generation)
-  - [ ] handle words that ends in consonants
+    - [x] check all files have no doubles
+    - [x] check small5, big5, hotel are sorted
+    - [x] check curated is sorted (had to fix stuff)
+    - [ ] check fixed is contained in curated
+  - [ ] refactor generation of final list of words (parole.txt) using also fixed words
   - [ ] command line tool to playtest list of words (play)
   - [ ] check against dictionary of parolette?
   - [x] make sure plausible is added: change nimib config and filename paths

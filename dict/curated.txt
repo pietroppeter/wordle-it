@@ -49,8 +49,8 @@ altra
 alveo
 alzai
 amaca
-amano
 amala
+amano
 amaro
 amati
 amato
@@ -121,8 +121,8 @@ badia
 baffi
 bagno
 baita
-balia
 baldo
+balia
 balle
 ballo
 balsa
@@ -426,8 +426,8 @@ ebano
 ebbro
 ebete
 ebreo
-edera
 edema
+edera
 edile
 educa
 efebo
@@ -664,8 +664,8 @@ lanci
 lardo
 largo
 larva
-lasco
 lasci
+lasco
 latta
 latte
 lavai
@@ -722,8 +722,8 @@ madre
 mafia
 maghi
 magia
-magro
 magma
+magro
 malga
 mallo
 malta
@@ -793,9 +793,9 @@ mossa
 mosto
 motto
 mozzi
-mughi
 mucca
 muffa
+mughi
 multa
 muoio
 muone
@@ -815,8 +815,8 @@ negli
 nembo
 nenia
 nerbo
-nesso
 nervi
+nesso
 netto
 nevai
 ninfa
@@ -880,8 +880,8 @@ ossia
 ostia
 ostro
 otite
-ovale
 ovaia
+ovale
 ovile
 ovini
 ovulo
@@ -986,8 +986,8 @@ poema
 poeta
 poggi
 polio
-pollo
 polka
+pollo
 polpa
 polpo
 polso
@@ -1058,8 +1058,8 @@ reato
 rebbi
 rebus
 recai
-regia
 reggo
+regia
 regio
 regno
 remai
@@ -1102,9 +1102,9 @@ rubli
 rughe
 rullo
 rumba
-rupia
 ruolo
 ruota
+rupia
 ruppe
 ruspa
 russo
@@ -1191,11 +1191,11 @@ sfumo
 sfuso
 siamo
 sidro
-sigma
 siedi
 siepe
 siero
 sigla
+sigma
 sinti
 sisma
 situa
@@ -1447,8 +1447,8 @@ vigna
 villa
 vinai
 vinco
-vinti
 vinse
+vinti
 viola
 viole
 virus

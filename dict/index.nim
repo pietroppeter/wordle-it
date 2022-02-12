@@ -1,4 +1,4 @@
-import nimib, std / [strformat, sequtils, strutils, sugar, setutils]
+import nimib, std / [strformat, sequtils, strutils, sugar, setutils, sets, algorithm]
 
 # todo: set Italian language in Nimib
 nbInit
@@ -110,16 +110,69 @@ nbCode:
     commonEndings = toSet("aeio")
     otherEndings = alphabet - commonEndings
 
-  func buona(word: string): bool =
-    len(word) == 5 and toSet(word) <= alphabet and word[^1] in commonEndings
+  template letterOk(word: string, i: int): bool =
+    word[i] in alphabet
 
-  func hotel(word: string): bool =
-    len(word) == 5 and toSet(word) <= alphabet and word[^1] in otherEndings
+  template lettersOk(word: string): bool =
+    letterOk(word, 1) and letterOk(word, 2) and letterOk(word, 3) and letterOk(word, 4)
 
-  echo filterFile(filenameSmallSource, filenameSmall5, buona)
-  echo filterFile(filenameBigSource, filenameBig5, buona)
+  # should be faster using the template lettersOk than using toSet(word) <= alphabet, right?
+  func buonaCond(word: string): bool =
+    len(word) == 5 and lettersOk(word) and word[^1] in commonEndings
 
-  echo filterFile(filenameBigSource, filenameHotel, hotel)
+  func hotelCond(word: string): bool =
+    len(word) == 5 and lettersOk(word) and word[^1] in otherEndings
+
+  echo filterFile(filenameSmallSource, filenameSmall5, buonaCond)
+  echo filterFile(filenameBigSource, filenameBig5, buonaCond)
+
+  echo filterFile(filenameBigSource, filenameHotel, hotelCond)
+
+nbText: """ ## 2. Checks on manual dicts and generate word list
+
+"""
+nbCode:
+  template make(ident: untyped) {. dirty .} =
+    let
+      ident = lines(`filename ident`).toSeq
+      `ident Set` = ident.toHashSet
+    echo `filename ident`, ": ", len(ident)
+    assert len(ident) == len(`ident Set`) # checks there are no doubles
+
+  template checkIsSorted(ident: untyped) =
+    var isSorted = true
+    for i in 0 ..< ident.high:
+      if cmp(ident[i], ident[i+1]) > 0:
+        echo ident[i], " > ", ident[i+1]
+        isSorted = false
+    if isSorted:
+      echo `filename ident`, " is sorted"
+    else:
+      echo `filename ident`, " is NOT sorted"
+
+  template checkContained(identA, identB: untyped) =
+    var isContained = true
+    for elem in `identA Set`:
+      if elem not_in `identB Set`:
+        echo elem, " not in ", `filename identB`
+        isContained = false
+    if isContained:
+      echo `filename identA`, " is contained in ", `filename identB`
+    else:
+      echo `filename identA`, " is NOT contained in ", `filename identB`
+
+  make small5
+  checkIsSorted small5
+  make big5
+  checkIsSorted big5
+  make hotel
+  checkIsSorted hotel
+
+  make curated
+  checkIsSorted curated
+  make fixed
+
+  checkContained fixed, curated
 
 nbText: """# Nim(ib) notes
 
