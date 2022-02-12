@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-  <title>index.nim</title>
+  <title>dict/index.nim</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🐳</text></svg>">
   <meta content="text/html; charset=utf-8" http-equiv="content-type">
   <meta content="width=device-width, initial-scale=1" name="viewport">
@@ -28,12 +28,12 @@ section#source {
 }
 </style>
   
-</head>
+  <script defer data-domain="pietroppeter.github.io/wordle-it" src="https://plausible.io/js/plausible.js"></script></head>
 <body>
 <header>
 <div class="nb-box">
-  <span><a href=".">🏡</a></span>
-  <span><code>index.nim</code></span>
+  <span><a href="..">🏡</a></span>
+  <span><code>dict/index.nim</code></span>
   <span><a href="https://github.com/pietroppeter/wordle-it"><svg aria-hidden="true" width="1.2em" height="1.2em" style="vertical-align: middle;" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59c.4.07.55-.17.55-.38c0-.19-.01-.82-.01-1.49c-2.01.37-2.53-.49-2.69-.94c-.09-.23-.48-.94-.82-1.13c-.28-.15-.68-.52-.01-.53c.63-.01 1.08.58 1.23.82c.72 1.21 1.87.87 2.33.66c.07-.52.28-.87.51-1.07c-1.78-.2-3.64-.89-3.64-3.95c0-.87.31-1.59.82-2.15c-.08-.2-.36-1.02.08-2.12c0 0 .67-.21 2.2.82c.64-.18 1.32-.27 2-.27c.68 0 1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82c.44 1.1.16 1.92.08 2.12c.51.56.82 1.27.82 2.15c0 3.07-1.87 3.75-3.65 3.95c.29.25.54.73.54 1.48c0 1.07-.01 1.93-.01 2.2c0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z" fill="#000"></path></svg></a></span>
 </div>
 <hr>
@@ -41,45 +41,45 @@ section#source {
 <h1>Dizionario di Par🇮🇹le</h1>
 <p>Il dizionario di Par🇮🇹le (o Parle) è basato su due dizionari disponibili pubblicamente.</p>
 <ul>
-<li>un dizionario &quot;piccolo&quot; di circa 60_000 parole (<code>60_000_parole.txt</code>)
+<li>un dizionario &quot;piccolo&quot; di circa 60_000 parole (<code>dict/60_000_parole.txt</code>)
 preso da <a href="https://github.com/napolux/paroleitaliane">napolux/paroleitaliane</a></li>
-<li>un dizionario &quot;grande&quot; di più di 4 milioni di parole (<code>dictionary.txt</code>)
+<li>un dizionario &quot;grande&quot; di più di 4 milioni di parole (<code>dict/dictionary.txt</code>)
 preso da <a href="https://github.com/sigmasaur/AnagramSolver">sigmasaur/AnagramSolver</a></li>
 </ul>
 <p>Questo documento spiega ed implementa il processo di generazione dei dizionari usati da Parle.</p>
 <p>I due dizionari sorgente sono usati per generare i dizionari usati dal gioco, ovvero:</p>
 <ul>
-<li><code>curated.txt</code>: dizionario che contiene in ordine alfabetico tutte le parole di 5 lettere che sono
+<li><code>dict/curated.txt</code>: dizionario che contiene in ordine alfabetico tutte le parole di 5 lettere che sono
 usate come parole da indovinare</li>
-<li><code>word_list.txt</code>: dizionario che contiene in ordine alfabetico tutte le parole di 5 lettere che possono
-essere usate come tentativi (contiene anche le parole in <code>curated.txt</code>)</li>
-<li><code>parole.txt</code>: dizionario che contiene l'ordine esatto delle parole da indovinare a partire dalla prima
-data del gioco (contiene tutte e sole le parole di <code>curated.txt</code> in ordine sparso)</li>
+<li><code>dict/word_list.txt</code>: dizionario che contiene in ordine alfabetico tutte le parole di 5 lettere che possono
+essere usate come tentativi (contiene anche le parole in <code>dict/curated.txt</code>)</li>
+<li><code>dict/parole.txt</code>: dizionario che contiene l'ordine esatto delle parole da indovinare a partire dalla prima
+data del gioco (contiene tutte e sole le parole di <code>dict/curated.txt</code> in ordine sparso)</li>
 </ul>
 <p>Il processo di generazione prevede i seguenti passi:</p>
 <ol>
 <li>estrarre le parole di 5 lettere dai dizionari piccolo e grande, limitandosi
 alle parole che finiscono in una vocale, tranne la u
 (il dizionario piccolo contiene radici di lemmi come <em>ripar</em> o simili).
-Il risultato (in ordine alfabetico) è salvato in <code>small5.txt</code> e <code>big5.txt</code>.
+Il risultato (in ordine alfabetico) è salvato in <code>dict/small5.txt</code> e <code>dict/big5.txt</code>.
 Estrarre dai dizionari le parole di 5 lettere che finiscono in consonante o in u (e.g. hotel, ...)
-e salvarle in <code>hotels.txt</code></li>
-<li>il dizionario <code>curated.txt</code> è costruito manualmente a partire dai dizionari fin qui generati.
+e salvarle in <code>dict/hotels.txt</code></li>
+<li>il dizionario <code>dict/curated.txt</code> è costruito manualmente a partire dai dizionari fin qui generati.
 Il processo di selezione delle possibili soluzioni è descritto in un documento a parte.
-contestualmente sono creati manualmente due dizionari <code>word_list_add.txt</code>
-e <code>word_list_remove.txt</code> che serviranno
-per generare il dizionario <code>word_list.txt</code>.</li>
-<li>un dizionario <code>fixed.txt</code> è generato a partire dalla soluzioni già usate nel gioco per fissare le
+contestualmente sono creati manualmente due dizionari <code>dict/word_list_add.txt</code>
+e <code>dict/word_list_remove.txt</code> che serviranno
+per generare il dizionario <code>dict/word_list.txt</code>.</li>
+<li>un dizionario <code>dict/fixed.txt</code> è generato a partire dalla soluzioni già usate nel gioco per fissare le
 parole usate a partire dal primo 3 gennaio fino ad una data di modifica della lista di parole da indovinare.
-In particolare il dizionario <code>fixed.txt</code> è contenuto in <code>curated.txt</code> ed è generato a partire dal
+In particolare il dizionario <code>dict/fixed.txt</code> è contenuto in <code>dict/curated.txt</code> ed è generato a partire dal
 dizionario generato nel prossimo passo.</li>
-<li>Il dizionario <code>parole.txt</code> è generato a partire dalle parole <code>fixed.txt</code>
-e dalle parole in <code>curated.txt</code> con una generazione casuale</li>
-<li>Infine viene generato il file <code>itLines.js</code> con le linee di codice da usare nel codice affinché usi
-le liste di <code>parole.txt</code> e <code>word_list.txt</code> generate fino a qui.</li>
+<li>Il dizionario <code>dict/parole.txt</code> è generato a partire dalle parole <code>dict/fixed.txt</code>
+e dalle parole in <code>dict/curated.txt</code> con una generazione casuale</li>
+<li>Infine viene generato il file <code>dict/itLines.js</code> con le linee di codice da usare nel codice affinché usi
+le liste di <code>dict/parole.txt</code> e <code>dict/word_list.txt</code> generate fino a qui.</li>
 </ol>
 <p><strong>Nota</strong>: il gioco non usa parole accentate. Parole accentate (con accento finale rimosso)
-compaiono in <code>word_list.txt</code> ma non in <code>parole.txt</code>.</p>
+compaiono in <code>dict/word_list.txt</code> ma non in <code>dict/parole.txt</code>.</p>
 <h2>Storia del processo di generazione del dizionario</h2>
 <p>Il processo è cambiato nel tempo:</p>
 <ul>
@@ -92,21 +92,23 @@ data scelta un po' per caso ed un po' per sbaglio)</li>
 (precedentemente erano selezionate in modo casuale a partire dal dizionario piccolo)</li>
 </ul>
 <p>Il resto del documento (in inglese) contiene il codice che implementa il processo e può contenere qualche lieve spoiler.</p>
+<h1>Implementation</h1>
 <h2>0. Filenames</h2>
 <p>All filenames used</p>
 <pre><code class="nim hljs"><span class="hljs-keyword">const</span>
-  filenameSmallSource = <span class="hljs-string">&quot;60_000_parole.txt&quot;</span>
-  filenameBigSource = <span class="hljs-string">&quot;dictionary.txt&quot;</span>
-  filenameCurated = <span class="hljs-string">&quot;curated.txt&quot;</span>
-  filenameWordList = <span class="hljs-string">&quot;word_list.txt&quot;</span>
-  filenameParole = <span class="hljs-string">&quot;parole.txt&quot;</span>
-  filenameSmall5 = <span class="hljs-string">&quot;small5.txt&quot;</span>
-  filenameBig5 = <span class="hljs-string">&quot;big5.txt&quot;</span>
-  filenameHotel = <span class="hljs-string">&quot;hotels.txt&quot;</span>
-  filenameAddToWordList = <span class="hljs-string">&quot;word_list_add.txt&quot;</span>
-  filenameRemoveFromWordList = <span class="hljs-string">&quot;word_list_remove.txt&quot;</span>
-  filenameFixed = <span class="hljs-string">&quot;fixed.txt&quot;</span>
-  filenameItLines = <span class="hljs-string">&quot;itLines.js&quot;</span></code></pre>
+  folderDict = <span class="hljs-string">&quot;dict/&quot;</span>
+  filenameSmallSource = folderDict &amp; <span class="hljs-string">&quot;60_000_parole.txt&quot;</span>
+  filenameBigSource = folderDict &amp; <span class="hljs-string">&quot;dictionary.txt&quot;</span>
+  filenameCurated = folderDict &amp; <span class="hljs-string">&quot;curated.txt&quot;</span>
+  filenameWordList = folderDict &amp; <span class="hljs-string">&quot;word_list.txt&quot;</span>
+  filenameParole = folderDict &amp; <span class="hljs-string">&quot;parole.txt&quot;</span>
+  filenameSmall5 = folderDict &amp; <span class="hljs-string">&quot;small5.txt&quot;</span>
+  filenameBig5 = folderDict &amp; <span class="hljs-string">&quot;big5.txt&quot;</span>
+  filenameHotel = folderDict &amp; <span class="hljs-string">&quot;hotels.txt&quot;</span>
+  filenameAddToWordList = folderDict &amp; <span class="hljs-string">&quot;word_list_add.txt&quot;</span>
+  filenameRemoveFromWordList = folderDict &amp; <span class="hljs-string">&quot;word_list_remove.txt&quot;</span>
+  filenameFixed = folderDict &amp; <span class="hljs-string">&quot;fixed.txt&quot;</span>
+  filenameItLines = folderDict &amp; <span class="hljs-string">&quot;itLines.js&quot;</span></code></pre>
 <h2>1. Extract 5 letter words from source dictionaries</h2>
 <pre><code class="nim hljs"><span class="hljs-keyword">type</span> <span class="hljs-type">FilterFileStats</span> = <span class="hljs-keyword">tuple</span>[sourceLines, destLines: <span class="hljs-built_in">int</span>]
 
@@ -134,11 +136,9 @@ data scelta un po' per caso ed un po' per sbaglio)</li>
 <span class="hljs-keyword">echo</span> filterFile(filenameSmallSource, filenameSmall5, buona)
 <span class="hljs-keyword">echo</span> filterFile(filenameBigSource, filenameBig5, buona)
 
-<span class="hljs-keyword">echo</span> filterFile(filenameBigSource, filenameHotel, hotel)
-<span class="hljs-keyword">echo</span> filterFile(filenameSmallSource, <span class="hljs-string">&quot;hotel2.txt&quot;</span>, hotel)</code></pre><pre><samp>(sourceLines: 60453, destLines: 2510)
+<span class="hljs-keyword">echo</span> filterFile(filenameBigSource, filenameHotel, hotel)</code></pre><pre><samp>(sourceLines: 60453, destLines: 2510)
 (sourceLines: 4261494, destLines: 7910)
-(sourceLines: 4261494, destLines: 1281)
-(sourceLines: 60453, destLines: 222)</samp></pre>
+(sourceLines: 4261494, destLines: 1281)</samp></pre>
 <h1>Nim(ib) notes</h1>
 <p>These notes may be of interest to you only if you know what Nim and Nimib are
 (language and library used to generate this document).</p>
@@ -164,18 +164,19 @@ nbInit
 <span class="hljs-comment"># filenames block is moved to a later point in the document</span>
 nbCode:
   <span class="hljs-keyword">const</span>
-    filenameSmallSource = <span class="hljs-string">&quot;60_000_parole.txt&quot;</span>
-    filenameBigSource = <span class="hljs-string">&quot;dictionary.txt&quot;</span>
-    filenameCurated = <span class="hljs-string">&quot;curated.txt&quot;</span>
-    filenameWordList = <span class="hljs-string">&quot;word_list.txt&quot;</span>
-    filenameParole = <span class="hljs-string">&quot;parole.txt&quot;</span>
-    filenameSmall5 = <span class="hljs-string">&quot;small5.txt&quot;</span>
-    filenameBig5 = <span class="hljs-string">&quot;big5.txt&quot;</span>
-    filenameHotel = <span class="hljs-string">&quot;hotels.txt&quot;</span>
-    filenameAddToWordList = <span class="hljs-string">&quot;word_list_add.txt&quot;</span>
-    filenameRemoveFromWordList = <span class="hljs-string">&quot;word_list_remove.txt&quot;</span>
-    filenameFixed = <span class="hljs-string">&quot;fixed.txt&quot;</span>
-    filenameItLines = <span class="hljs-string">&quot;itLines.js&quot;</span>
+    folderDict = <span class="hljs-string">&quot;dict/&quot;</span>
+    filenameSmallSource = folderDict &amp; <span class="hljs-string">&quot;60_000_parole.txt&quot;</span>
+    filenameBigSource = folderDict &amp; <span class="hljs-string">&quot;dictionary.txt&quot;</span>
+    filenameCurated = folderDict &amp; <span class="hljs-string">&quot;curated.txt&quot;</span>
+    filenameWordList = folderDict &amp; <span class="hljs-string">&quot;word_list.txt&quot;</span>
+    filenameParole = folderDict &amp; <span class="hljs-string">&quot;parole.txt&quot;</span>
+    filenameSmall5 = folderDict &amp; <span class="hljs-string">&quot;small5.txt&quot;</span>
+    filenameBig5 = folderDict &amp; <span class="hljs-string">&quot;big5.txt&quot;</span>
+    filenameHotel = folderDict &amp; <span class="hljs-string">&quot;hotels.txt&quot;</span>
+    filenameAddToWordList = folderDict &amp; <span class="hljs-string">&quot;word_list_add.txt&quot;</span>
+    filenameRemoveFromWordList = folderDict &amp; <span class="hljs-string">&quot;word_list_remove.txt&quot;</span>
+    filenameFixed = folderDict &amp; <span class="hljs-string">&quot;fixed.txt&quot;</span>
+    filenameItLines = folderDict &amp; <span class="hljs-string">&quot;itLines.js&quot;</span>
 
 <span class="hljs-keyword">let</span> blockFilename = nb.blocks.pop
 
@@ -236,6 +237,8 @@ Il processo è cambiato nel tempo:
 
 Il resto del documento (in inglese) contiene il codice che implementa il processo e può contenere qualche lieve spoiler.
 
+# Implementation
+
 ## 0. Filenames
 
 All filenames used
@@ -275,7 +278,6 @@ nbCode:
   <span class="hljs-keyword">echo</span> filterFile(filenameBigSource, filenameBig5, buona)
 
   <span class="hljs-keyword">echo</span> filterFile(filenameBigSource, filenameHotel, hotel)
-  <span class="hljs-keyword">echo</span> filterFile(filenameSmallSource, <span class="hljs-string">&quot;hotel2.txt&quot;</span>, hotel)
 
 nbText: <span class="hljs-string">&quot;&quot;&quot;# Nim(ib) notes
 

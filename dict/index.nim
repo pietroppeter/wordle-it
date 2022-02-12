@@ -6,18 +6,19 @@ nbInit
 # filenames block is moved to a later point in the document
 nbCode:
   const
-    filenameSmallSource = "60_000_parole.txt"
-    filenameBigSource = "dictionary.txt"
-    filenameCurated = "curated.txt"
-    filenameWordList = "word_list.txt"
-    filenameParole = "parole.txt"
-    filenameSmall5 = "small5.txt"
-    filenameBig5 = "big5.txt"
-    filenameHotel = "hotels.txt"
-    filenameAddToWordList = "word_list_add.txt"
-    filenameRemoveFromWordList = "word_list_remove.txt"
-    filenameFixed = "fixed.txt"
-    filenameItLines = "itLines.js"
+    folderDict = "dict/"
+    filenameSmallSource = folderDict & "60_000_parole.txt"
+    filenameBigSource = folderDict & "dictionary.txt"
+    filenameCurated = folderDict & "curated.txt"
+    filenameWordList = folderDict & "word_list.txt"
+    filenameParole = folderDict & "parole.txt"
+    filenameSmall5 = folderDict & "small5.txt"
+    filenameBig5 = folderDict & "big5.txt"
+    filenameHotel = folderDict & "hotels.txt"
+    filenameAddToWordList = folderDict & "word_list_add.txt"
+    filenameRemoveFromWordList = folderDict & "word_list_remove.txt"
+    filenameFixed = folderDict & "fixed.txt"
+    filenameItLines = folderDict & "itLines.js"
 
 let blockFilename = nb.blocks.pop
 
