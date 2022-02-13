@@ -1,7 +1,7 @@
 dev notes:
 
 - [x] move all dictionary related code and data in dictionary folder
-- [ ] a nimib document that documents and implements the process of generation of dictionaries starting from sources
+- [x] a nimib document that documents and implements the process of generation of dictionaries starting from sources
   - [x] introduction and documenting the process
   - [x] filenames
   - [x] refactor extraction of 5 letter words for dictionaries
@@ -19,11 +19,12 @@ dev notes:
   - [x] make sure plausible is added: change nimib config and filename paths
   - [x] generation of final list of words (parole.txt) using also fixed words
   - [x] generate itLines.js
-- [ ] command line tool to playtest list of words (play)
-- [ ] document that summarizes curation process (e.g. curation_notes.md)
 - [x] changes in wordle (only test version)
   - [x] merge current master with test version
   - [x] change start date in wordle code
   - [x] add versioning in wordle code (release as 0.what? or 1.0?)
   - [x] add n° to number
 - [ ] copy test into prod (after first PR is merged)
+- [ ] command line tool to playtest list of words (play)
+- [ ] document that summarizes curation process (e.g. curation_notes.md)
+- [ ] document with statistics about word list (distribution of letters, distances, "pillars", ...)
