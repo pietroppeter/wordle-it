@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <title>dict/index.nim</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🐳</text></svg>">
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link rel='stylesheet' href='https://unpkg.com/normalize.css/'>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/pietroppeter/nimib/assets/atom-one-light.css'>
+  <style>
+.nb-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nb-small {
+  font-size: 0.8rem;
+}
+button.nb-small {
+  float: right;
+  padding: 2px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+section#source {
+  display:none
+}
+</style>
+  
+  <script defer data-domain="pietroppeter.github.io/wordle-it" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+<header>
+<div class="nb-box">
+  <span><a href="..">🏡</a></span>
+  <span><code>dict/index.nim</code></span>
+  <span><a href="https://github.com/pietroppeter/wordle-it"><svg aria-hidden="true" width="1.2em" height="1.2em" style="vertical-align: middle;" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59c.4.07.55-.17.55-.38c0-.19-.01-.82-.01-1.49c-2.01.37-2.53-.49-2.69-.94c-.09-.23-.48-.94-.82-1.13c-.28-.15-.68-.52-.01-.53c.63-.01 1.08.58 1.23.82c.72 1.21 1.87.87 2.33.66c.07-.52.28-.87.51-1.07c-1.78-.2-3.64-.89-3.64-3.95c0-.87.31-1.59.82-2.15c-.08-.2-.36-1.02.08-2.12c0 0 .67-.21 2.2.82c.64-.18 1.32-.27 2-.27c.68 0 1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82c.44 1.1.16 1.92.08 2.12c.51.56.82 1.27.82 2.15c0 3.07-1.87 3.75-3.65 3.95c.29.25.54.73.54 1.48c0 1.07-.01 1.93-.01 2.2c0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z" fill="#000"></path></svg></a></span>
+</div>
+<hr>
+</header><main>
+<h1>Dizionario di Par🇮🇹le</h1>
+<p>Il dizionario di Par🇮🇹le (o Parle) è basato su dizionari disponibili pubblicamente.</p>
+<ul>
+<li>un dizionario &quot;piccolo&quot; di circa 60_000 parole (<code>dict/60_000_parole.txt</code>)
+preso da <a href="https://github.com/napolux/paroleitaliane">napolux/paroleitaliane</a></li>
+<li>un dizionario &quot;grande&quot; di più di 4 milioni di parole (<code>dict/dictionary.txt</code>)
+preso da <a href="https://github.com/sigmasaur/AnagramSolver">sigmasaur/AnagramSolver</a></li>
+</ul>
+<p>Inoltre il dizionario usato da <a href="https://parolette.netlify.app">parolette</a> è stato usato come fonte di ulteriore
+idee da aggiungere.</p>
+<p>Questo documento spiega ed implementa il processo di generazione dei dizionari usati da Parle.</p>
+<p>I due dizionari sorgente sono usati per generare i dizionari usati dal gioco, ovvero:</p>
+<ul>
+<li><code>dict/curated.txt</code>: dizionario che contiene in ordine alfabetico tutte le parole di 5 lettere che sono
+usate come parole da indovinare</li>
+<li><code>dict/word_list.txt</code>: dizionario che contiene in ordine alfabetico tutte le parole di 5 lettere che possono
+essere usate come tentativi (contiene anche le parole in <code>dict/curated.txt</code>)</li>
+<li><code>dict/parole.txt</code>: dizionario che contiene l'ordine esatto delle parole da indovinare a partire dalla prima
+data del gioco (contiene tutte e sole le parole di <code>dict/curated.txt</code> in ordine sparso)</li>
+</ul>
+<p>Il processo di generazione prevede i seguenti passi:</p>
+<ol>
+<li>estrarre le parole di 5 lettere dai dizionari piccolo e grande, limitandosi
+alle parole che finiscono in una vocale, tranne la u
+(il dizionario piccolo contiene radici di lemmi come <em>ripar</em> o simili).
+Il risultato (in ordine alfabetico) è salvato in <code>dict/small5.txt</code> e <code>dict/big5.txt</code>.
+Estrarre dai dizionari le parole di 5 lettere che finiscono in consonante o in u (e.g. hotel, ...)
+e salvarle in <code>dict/hotels.txt</code></li>
+<li>il dizionario <code>dict/curated.txt</code> è costruito manualmente a partire dai dizionari fin qui generati.
+Il processo di selezione delle possibili soluzioni è descritto in un documento a parte.
+contestualmente sono creati manualmente due dizionari <code>dict/word_list_add.txt</code>
+e <code>dict/word_list_remove.txt</code> che serviranno
+per generare il dizionario <code>dict/word_list.txt</code>.</li>
+<li>un dizionario <code>dict/fixed.txt</code> è generato a partire dalla soluzioni già usate nel gioco per fissare le
+parole usate a partire dal primo 3 gennaio fino ad una data di modifica della lista di parole da indovinare.
+In particolare il dizionario <code>dict/fixed.txt</code> è contenuto in <code>dict/curated.txt</code> ed è generato a partire dal
+dizionario generato nel prossimo passo.</li>
+<li>Il dizionario <code>dict/parole.txt</code> è generato a partire dalle parole <code>dict/fixed.txt</code>
+e dalle parole in <code>dict/curated.txt</code> con una generazione casuale</li>
+<li>Infine viene generato il file <code>dict/itLines.js</code> con le linee di codice da usare nel codice affinché usi
+le liste di <code>dict/parole.txt</code> e <code>dict/word_list.txt</code> generate fino a qui.</li>
+</ol>
+<p><strong>Nota</strong>: il gioco non usa parole accentate. Parole accentate (con accento finale rimosso)
+compaiono in <code>dict/word_list.txt</code> ma non in <code>dict/parole.txt</code>.</p>
+<h2>Storia del processo di generazione del dizionario</h2>
+<p>Il processo è cambiato nel tempo:</p>
+<ul>
+<li>il dizionario piccolo è in uso dal 3 gennaio 2022 (giorno di nascita di Parle)</li>
+<li>il dizionario grande è in uso dal 4 gennaio 2022</li>
+<li>a partire dal 12 febbraio la numerazione delle parole è fatta a partire dal 3 gennaio
+(precedentemente la numerazione era fatta a partire dal 1 febbraio 2021,
+data scelta un po' per caso ed un po' per sbaglio)</li>
+<li>a partire dal 14 febbraio le parole da indovinare sono &quot;curate&quot;, ovvero è stato fatto un processo di selezione
+(precedentemente erano selezionate in modo casuale a partire dal dizionario piccolo)</li>
+</ul>
+<p>Il resto del documento (in inglese) contiene il codice che implementa il processo e può contenere qualche lieve spoiler.</p>
+<h1>Implementation</h1>
+<h2>0. Filenames</h2>
+<p>All filenames used</p>
+<pre><code class="nim hljs"><span class="hljs-keyword">const</span>
+  folderDict = <span class="hljs-string">&quot;dict/&quot;</span>
+  filenameSmallSource = folderDict &amp; <span class="hljs-string">&quot;60_000_parole.txt&quot;</span>
+  filenameBigSource = folderDict &amp; <span class="hljs-string">&quot;dictionary.txt&quot;</span>
+  filenameCurated = folderDict &amp; <span class="hljs-string">&quot;curated.txt&quot;</span>
+  filenameWordList = folderDict &amp; <span class="hljs-string">&quot;word_list.txt&quot;</span>
+  filenameParole = folderDict &amp; <span class="hljs-string">&quot;parole.txt&quot;</span>
+  filenameSmall5 = folderDict &amp; <span class="hljs-string">&quot;small5.txt&quot;</span>
+  filenameBig5 = folderDict &amp; <span class="hljs-string">&quot;big5.txt&quot;</span>
+  filenameHotel = folderDict &amp; <span class="hljs-string">&quot;hotels.txt&quot;</span>
+  filenameAddToWordList = folderDict &amp; <span class="hljs-string">&quot;word_list_add.txt&quot;</span>
+  filenameRemoveFromWordList = folderDict &amp; <span class="hljs-string">&quot;word_list_remove.txt&quot;</span>
+  filenameFixed = folderDict &amp; <span class="hljs-string">&quot;fixed.txt&quot;</span>
+  filenameParolette = folderDict &amp; <span class="hljs-string">&quot;parolette.txt&quot;</span>
+  filenameParoletteIdeas = folderDict &amp; <span class="hljs-string">&quot;parolette_ideas.txt&quot;</span>
+  filenameItLines = folderDict &amp; <span class="hljs-string">&quot;itLines.js&quot;</span>
+  linkParolette = <span class="hljs-string">&quot;[parolette](https://parolette.netlify.app)&quot;</span></code></pre>
+<h2>1. Extract 5 letter words from source dictionaries</h2>
+<pre><code class="nim hljs"><span class="hljs-keyword">type</span> <span class="hljs-type">FilterFileStats</span> = <span class="hljs-keyword">tuple</span>[sourceLines, destLines: <span class="hljs-built_in">int</span>]
+
+<span class="hljs-keyword">proc</span> filterFile(source, dest: <span class="hljs-built_in">string</span>, condition: <span class="hljs-built_in">string</span> -&gt; <span class="hljs-built_in">bool</span>): <span class="hljs-type">FilterFileStats</span> =
+  <span class="hljs-comment">## filter lines in source file according to condition and write valid lines in destination</span>
+  <span class="hljs-comment">## outputs line count of source and destination file    </span>
+  <span class="hljs-keyword">var</span> outLines : <span class="hljs-built_in">seq</span>[<span class="hljs-built_in">string</span>]
+  <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> source.lines:
+    inc <span class="hljs-literal">result</span>.sourceLines
+    <span class="hljs-keyword">if</span> condition(line):
+      inc <span class="hljs-literal">result</span>.destLines
+      outLines.add line
+  writeFile(dest): outLines.join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>)</code></pre>
+<pre><code class="nim hljs"><span class="hljs-keyword">const</span>
+  alphabet = toSet(<span class="hljs-string">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span>)
+  commonEndings = toSet(<span class="hljs-string">&quot;aeio&quot;</span>)
+  otherEndings = alphabet - commonEndings
+
+<span class="hljs-keyword">template</span> letterOk(word: <span class="hljs-built_in">string</span>, i: <span class="hljs-built_in">int</span>): <span class="hljs-built_in">bool</span> =
+  word[i] <span class="hljs-keyword">in</span> alphabet
+
+<span class="hljs-keyword">template</span> lettersOk(word: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">bool</span> =
+  letterOk(word, <span class="hljs-number">1</span>) <span class="hljs-keyword">and</span> letterOk(word, <span class="hljs-number">2</span>) <span class="hljs-keyword">and</span> letterOk(word, <span class="hljs-number">3</span>) <span class="hljs-keyword">and</span> letterOk(word, <span class="hljs-number">4</span>)
+
+<span class="hljs-comment"># should be faster using the template lettersOk than using toSet(word) &lt;= alphabet, right?</span>
+<span class="hljs-keyword">func</span> buonaCond(word: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">bool</span> =
+  len(word) == <span class="hljs-number">5</span> <span class="hljs-keyword">and</span> lettersOk(word) <span class="hljs-keyword">and</span> word[^<span class="hljs-number">1</span>] <span class="hljs-keyword">in</span> commonEndings
+
+<span class="hljs-keyword">func</span> hotelCond(word: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">bool</span> =
+  len(word) == <span class="hljs-number">5</span> <span class="hljs-keyword">and</span> lettersOk(word) <span class="hljs-keyword">and</span> word[^<span class="hljs-number">1</span>] <span class="hljs-keyword">in</span> otherEndings
+
+<span class="hljs-keyword">echo</span> filterFile(filenameSmallSource, filenameSmall5, buonaCond)
+<span class="hljs-keyword">echo</span> filterFile(filenameBigSource, filenameBig5, buonaCond)
+
+<span class="hljs-keyword">echo</span> filterFile(filenameBigSource, filenameHotel, hotelCond)</code></pre><pre><samp>(sourceLines: 60453, destLines: 2510)
+(sourceLines: 4261494, destLines: 7910)
+(sourceLines: 4261494, destLines: 1281)</samp></pre>
+<h2>2. Checks on manual dicts and generate word list</h2>
+<pre><code class="nim hljs"><span class="hljs-keyword">template</span> make(ident: <span class="hljs-built_in">untyped</span>) {. dirty .} =
+  <span class="hljs-keyword">let</span>
+    ident = lines(`filename ident`).toSeq
+    `ident <span class="hljs-type">Set</span>` = ident.toHashSet
+  <span class="hljs-keyword">echo</span> `filename ident`, <span class="hljs-string">&quot;: &quot;</span>, len(ident)
+  <span class="hljs-keyword">assert</span> len(ident) == len(`ident <span class="hljs-type">Set</span>`) <span class="hljs-comment"># checks there are no doubles</span>
+
+<span class="hljs-keyword">template</span> checkIsSorted(ident: <span class="hljs-built_in">untyped</span>) =
+  <span class="hljs-keyword">var</span> isSorted = <span class="hljs-literal">true</span>
+  <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span> ..&lt; ident.<span class="hljs-keyword">high</span>:
+    <span class="hljs-keyword">if</span> cmp(ident[i], ident[i+<span class="hljs-number">1</span>]) &gt; <span class="hljs-number">0</span>:
+      <span class="hljs-keyword">echo</span> ident[i], <span class="hljs-string">&quot; &gt; &quot;</span>, ident[i+<span class="hljs-number">1</span>]
+      isSorted = <span class="hljs-literal">false</span>
+  <span class="hljs-keyword">if</span> isSorted:
+    <span class="hljs-keyword">echo</span> `filename ident`, <span class="hljs-string">&quot; is sorted&quot;</span>
+  <span class="hljs-keyword">else</span>:
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;[ERROR]&quot;</span>, `filename ident`, <span class="hljs-string">&quot; is NOT sorted&quot;</span>
+
+<span class="hljs-keyword">template</span> checkContained(identA, identB: <span class="hljs-built_in">untyped</span>) =
+  <span class="hljs-keyword">var</span> isContained = <span class="hljs-literal">true</span>
+  <span class="hljs-keyword">for</span> elem <span class="hljs-keyword">in</span> `identA <span class="hljs-type">Set</span>`:
+    <span class="hljs-keyword">if</span> elem <span class="hljs-keyword">not_in</span> `identB <span class="hljs-type">Set</span>`:
+      <span class="hljs-keyword">echo</span> elem, <span class="hljs-string">&quot; not in &quot;</span>, `filename identB`
+      isContained = <span class="hljs-literal">false</span>
+  <span class="hljs-keyword">if</span> isContained:
+    <span class="hljs-keyword">echo</span> `filename identA`, <span class="hljs-string">&quot; is contained in &quot;</span>, `filename identB`
+  <span class="hljs-keyword">else</span>:
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;[ERROR]&quot;</span>, `filename identA`, <span class="hljs-string">&quot; is NOT contained in &quot;</span>, `filename identB`
+
+make small5
+checkIsSorted small5
+make big5
+checkIsSorted big5
+make hotel
+checkIsSorted hotel
+
+make curated
+checkIsSorted curated
+make fixed
+
+checkContained fixed, curated
+<span class="hljs-comment"># checkContained small5, big5 # not expected to happen (and it does not happen)</span>
+
+make addToWordList
+make removeFromWordList
+checkContained removeFromWordList, big5</code></pre><pre><samp>dict/small5.txt: 2510
+dict/small5.txt is sorted
+dict/big5.txt: 7910
+dict/big5.txt is sorted
+dict/hotels.txt: 1281
+dict/hotels.txt is sorted
+dict/curated.txt: 1528
+dict/curated.txt is sorted
+dict/fixed.txt: 42
+dict/fixed.txt is contained in dict/curated.txt
+dict/word_list_add.txt: 86
+dict/word_list_remove.txt: 167
+dict/word_list_remove.txt is contained in dict/big5.txt</samp></pre>
+<p>dictionary from italian version of wordle <a href="https://parolette.netlify.app">parolette</a>
+is used to generated more ideas that have been incorporated in the curated dictionary (or in word list).</p>
+<pre><code class="nim hljs">make parolette
+<span class="hljs-keyword">let</span> wordIdeas = sorted(toSeq(paroletteSet - curatedSet - big5Set))
+dump len(wordIdeas)
+writeFile(filenameParoletteIdeas, wordIdeas.join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>))</code></pre><pre><samp>dict/parolette.txt: 1917
+len(wordIdeas) = 234</samp></pre>
+<p>Generation of final word list</p>
+<pre><code class="nim hljs"><span class="hljs-keyword">let</span>
+  wordListSet = curatedSet + big5Set + addToWordListSet - removeFromWordListSet
+  wordList = sorted(toSeq(wordListSet))
+dump len(wordList)
+checkContained curated, wordList <span class="hljs-comment"># almost obvious</span>
+writeFile(filenameWordList, wordList.join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>))</code></pre><pre><samp>len(wordList) = 7834
+dict/curated.txt is contained in dict/word_list.txt</samp></pre>
+<h2>4. Generate list of solution words</h2>
+<pre><code class="nim hljs"><span class="hljs-keyword">var</span> paroleFuture = toSeq(curatedSet - fixedSet)
+randomize(<span class="hljs-number">202</span>)
+shuffle(paroleFuture)
+<span class="hljs-keyword">let</span>
+  parole = fixed &amp; paroleFuture
+writeFile(filenameParole, parole.join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>))
+<span class="hljs-keyword">assert</span> len(parole) == len(curated)</code></pre>
+<h2>5. Generate itLines.js</h2>
+<pre><code class="nim hljs"><span class="hljs-keyword">let</span>
+  paroleForJs = parole.mapIt(&amp;<span class="hljs-string">&quot;</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">{it}</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">&quot;</span>).join(<span class="hljs-string">&quot;, &quot;</span>)
+  wordListForJs = (wordListSet - curatedSet).toSeq.sorted.mapIt(&amp;<span class="hljs-string">&quot;</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">{it}</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">&quot;</span>).join(<span class="hljs-string">&quot;, &quot;</span>)
+writeFile(filenameItLines): &amp;<span class="hljs-string">&quot;&quot;&quot;
+  var Aa = [{paroleForJs}],
+      La = [{wordListForJs}],
+&quot;&quot;&quot;</span></code></pre>
+<h1>Nim(ib) notes</h1>
+<p>These notes may be of interest to you only if you know what Nim and Nimib are
+(language and library used to generate this document).</p>
+<ul>
+<li>imports are not shown (see Show Source below)</li>
+<li>const filenames used in initial paragraph but shown later</li>
+</ul>
+</main>
+<footer>
+<hr>
+<div class="nb-box">
+  <span><span class="nb-small">made with <a href="https://pietroppeter.github.io/nimib/">nimib 🐳</a></span></span>
+  <span></span>
+  <span><button class="nb-small" id="show" onclick="toggleSourceDisplay()">Show Source</button></span>
+</div>
+</footer>
+<section id="source">
+<pre><code class="nim hljs"><span class="hljs-keyword">import</span> nimib, std / [strformat, sequtils, strutils, sugar, setutils, sets, algorithm, random]
+
+<span class="hljs-comment"># todo: set Italian language in Nimib</span>
+nbInit
+
+<span class="hljs-comment"># filenames block is moved to a later point in the document</span>
+nbCode:
+  <span class="hljs-keyword">const</span>
+    folderDict = <span class="hljs-string">&quot;dict/&quot;</span>
+    filenameSmallSource = folderDict &amp; <span class="hljs-string">&quot;60_000_parole.txt&quot;</span>
+    filenameBigSource = folderDict &amp; <span class="hljs-string">&quot;dictionary.txt&quot;</span>
+    filenameCurated = folderDict &amp; <span class="hljs-string">&quot;curated.txt&quot;</span>
+    filenameWordList = folderDict &amp; <span class="hljs-string">&quot;word_list.txt&quot;</span>
+    filenameParole = folderDict &amp; <span class="hljs-string">&quot;parole.txt&quot;</span>
+    filenameSmall5 = folderDict &amp; <span class="hljs-string">&quot;small5.txt&quot;</span>
+    filenameBig5 = folderDict &amp; <span class="hljs-string">&quot;big5.txt&quot;</span>
+    filenameHotel = folderDict &amp; <span class="hljs-string">&quot;hotels.txt&quot;</span>
+    filenameAddToWordList = folderDict &amp; <span class="hljs-string">&quot;word_list_add.txt&quot;</span>
+    filenameRemoveFromWordList = folderDict &amp; <span class="hljs-string">&quot;word_list_remove.txt&quot;</span>
+    filenameFixed = folderDict &amp; <span class="hljs-string">&quot;fixed.txt&quot;</span>
+    filenameParolette = folderDict &amp; <span class="hljs-string">&quot;parolette.txt&quot;</span>
+    filenameParoletteIdeas = folderDict &amp; <span class="hljs-string">&quot;parolette_ideas.txt&quot;</span>
+    filenameItLines = folderDict &amp; <span class="hljs-string">&quot;itLines.js&quot;</span>
+    linkParolette = <span class="hljs-string">&quot;[parolette](https://parolette.netlify.app)&quot;</span>
+
+<span class="hljs-keyword">let</span> blockFilename = nb.blocks.pop
+
+nbText: &amp;<span class="hljs-string">&quot;&quot;&quot; # Dizionario di Par🇮🇹le
+
+Il dizionario di Par🇮🇹le (o Parle) è basato su dizionari disponibili pubblicamente.
+
+- un dizionario &quot;piccolo&quot; di circa 60_000 parole (`{filenameSmallSource}`)
+  preso da [napolux/paroleitaliane](https://github.com/napolux/paroleitaliane)
+- un dizionario &quot;grande&quot; di più di 4 milioni di parole (`{filenameBigSource}`)
+  preso da [sigmasaur/AnagramSolver](https://github.com/sigmasaur/AnagramSolver)
+
+Inoltre il dizionario usato da {linkParolette} è stato usato come fonte di ulteriore
+idee da aggiungere.
+
+Questo documento spiega ed implementa il processo di generazione dei dizionari usati da Parle.
+
+I due dizionari sorgente sono usati per generare i dizionari usati dal gioco, ovvero:
+  - `{filenameCurated}`: dizionario che contiene in ordine alfabetico tutte le parole di 5 lettere che sono
+    usate come parole da indovinare
+  - `{filenameWordList}`: dizionario che contiene in ordine alfabetico tutte le parole di 5 lettere che possono
+    essere usate come tentativi (contiene anche le parole in `{filenameCurated}`)
+  - `{filenameParole}`: dizionario che contiene l'ordine esatto delle parole da indovinare a partire dalla prima
+    data del gioco (contiene tutte e sole le parole di `{filenameCurated}` in ordine sparso)
+
+Il processo di generazione prevede i seguenti passi:
+
+1. estrarre le parole di 5 lettere dai dizionari piccolo e grande, limitandosi
+   alle parole che finiscono in una vocale, tranne la u
+   (il dizionario piccolo contiene radici di lemmi come _ripar_ o simili).
+   Il risultato (in ordine alfabetico) è salvato in `{filenameSmall5}` e `{filenameBig5}`.
+   Estrarre dai dizionari le parole di 5 lettere che finiscono in consonante o in u (e.g. hotel, ...)
+   e salvarle in `{filenameHotel}`
+2. il dizionario `{filenameCurated}` è costruito manualmente a partire dai dizionari fin qui generati.
+   Il processo di selezione delle possibili soluzioni è descritto in un documento a parte.
+   contestualmente sono creati manualmente due dizionari `{filenameAddToWordList}`
+   e `{filenameRemoveFromWordList}` che serviranno
+   per generare il dizionario `{filenameWordList}`.
+3. un dizionario `{filenameFixed}` è generato a partire dalla soluzioni già usate nel gioco per fissare le
+   parole usate a partire dal primo 3 gennaio fino ad una data di modifica della lista di parole da indovinare.
+   In particolare il dizionario `{filenameFixed}` è contenuto in `{filenameCurated}` ed è generato a partire dal
+   dizionario generato nel prossimo passo.
+4. Il dizionario `{filenameParole}` è generato a partire dalle parole `{filenameFixed}`
+   e dalle parole in `{filenameCurated}` con una generazione casuale
+5. Infine viene generato il file `{filenameItLines}` con le linee di codice da usare nel codice affinché usi
+   le liste di `{filenameParole}` e `{filenameWordList}` generate fino a qui.
+
+**Nota**: il gioco non usa parole accentate. Parole accentate (con accento finale rimosso)
+compaiono in `{filenameWordList}` ma non in `{filenameParole}`.
+
+## Storia del processo di generazione del dizionario
+
+Il processo è cambiato nel tempo:
+  - il dizionario piccolo è in uso dal 3 gennaio 2022 (giorno di nascita di Parle)
+  - il dizionario grande è in uso dal 4 gennaio 2022
+  - a partire dal 12 febbraio la numerazione delle parole è fatta a partire dal 3 gennaio
+    (precedentemente la numerazione era fatta a partire dal 1 febbraio 2021,
+    data scelta un po' per caso ed un po' per sbaglio)
+  - a partire dal 14 febbraio le parole da indovinare sono &quot;curate&quot;, ovvero è stato fatto un processo di selezione
+    (precedentemente erano selezionate in modo casuale a partire dal dizionario piccolo)
+
+Il resto del documento (in inglese) contiene il codice che implementa il processo e può contenere qualche lieve spoiler.
+
+# Implementation
+
+## 0. Filenames
+
+All filenames used
+&quot;&quot;&quot;</span>
+nb.blocks.add blockFilename
+nbText: <span class="hljs-string">&quot;&quot;&quot;
+## 1. Extract 5 letter words from source dictionaries
+&quot;&quot;&quot;</span>
+nbCode:
+  <span class="hljs-keyword">type</span> <span class="hljs-type">FilterFileStats</span> = <span class="hljs-keyword">tuple</span>[sourceLines, destLines: <span class="hljs-built_in">int</span>]
+
+  <span class="hljs-keyword">proc</span> filterFile(source, dest: <span class="hljs-built_in">string</span>, condition: <span class="hljs-built_in">string</span> -&gt; <span class="hljs-built_in">bool</span>): <span class="hljs-type">FilterFileStats</span> =
+    <span class="hljs-comment">## filter lines in source file according to condition and write valid lines in destination</span>
+    <span class="hljs-comment">## outputs line count of source and destination file    </span>
+    <span class="hljs-keyword">var</span> outLines : <span class="hljs-built_in">seq</span>[<span class="hljs-built_in">string</span>]
+    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> source.lines:
+      inc <span class="hljs-literal">result</span>.sourceLines
+      <span class="hljs-keyword">if</span> condition(line):
+        inc <span class="hljs-literal">result</span>.destLines
+        outLines.add line
+    writeFile(dest): outLines.join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>)
+
+<span class="hljs-comment"># first time I am using toSet from std / setutils (did not know that module existed)</span>
+nbCode:
+  <span class="hljs-keyword">const</span>
+    alphabet = toSet(<span class="hljs-string">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span>)
+    commonEndings = toSet(<span class="hljs-string">&quot;aeio&quot;</span>)
+    otherEndings = alphabet - commonEndings
+
+  <span class="hljs-keyword">template</span> letterOk(word: <span class="hljs-built_in">string</span>, i: <span class="hljs-built_in">int</span>): <span class="hljs-built_in">bool</span> =
+    word[i] <span class="hljs-keyword">in</span> alphabet
+
+  <span class="hljs-keyword">template</span> lettersOk(word: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">bool</span> =
+    letterOk(word, <span class="hljs-number">1</span>) <span class="hljs-keyword">and</span> letterOk(word, <span class="hljs-number">2</span>) <span class="hljs-keyword">and</span> letterOk(word, <span class="hljs-number">3</span>) <span class="hljs-keyword">and</span> letterOk(word, <span class="hljs-number">4</span>)
+
+  <span class="hljs-comment"># should be faster using the template lettersOk than using toSet(word) &lt;= alphabet, right?</span>
+  <span class="hljs-keyword">func</span> buonaCond(word: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">bool</span> =
+    len(word) == <span class="hljs-number">5</span> <span class="hljs-keyword">and</span> lettersOk(word) <span class="hljs-keyword">and</span> word[^<span class="hljs-number">1</span>] <span class="hljs-keyword">in</span> commonEndings
+
+  <span class="hljs-keyword">func</span> hotelCond(word: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">bool</span> =
+    len(word) == <span class="hljs-number">5</span> <span class="hljs-keyword">and</span> lettersOk(word) <span class="hljs-keyword">and</span> word[^<span class="hljs-number">1</span>] <span class="hljs-keyword">in</span> otherEndings
+
+  <span class="hljs-keyword">echo</span> filterFile(filenameSmallSource, filenameSmall5, buonaCond)
+  <span class="hljs-keyword">echo</span> filterFile(filenameBigSource, filenameBig5, buonaCond)
+
+  <span class="hljs-keyword">echo</span> filterFile(filenameBigSource, filenameHotel, hotelCond)
+
+nbText: <span class="hljs-string">&quot;&quot;&quot; ## 2. Checks on manual dicts and generate word list
+
+&quot;&quot;&quot;</span>
+nbCode:
+  <span class="hljs-keyword">template</span> make(ident: <span class="hljs-built_in">untyped</span>) {. dirty .} =
+    <span class="hljs-keyword">let</span>
+      ident = lines(`filename ident`).toSeq
+      `ident <span class="hljs-type">Set</span>` = ident.toHashSet
+    <span class="hljs-keyword">echo</span> `filename ident`, <span class="hljs-string">&quot;: &quot;</span>, len(ident)
+    <span class="hljs-keyword">assert</span> len(ident) == len(`ident <span class="hljs-type">Set</span>`) <span class="hljs-comment"># checks there are no doubles</span>
+
+  <span class="hljs-keyword">template</span> checkIsSorted(ident: <span class="hljs-built_in">untyped</span>) =
+    <span class="hljs-keyword">var</span> isSorted = <span class="hljs-literal">true</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span> ..&lt; ident.<span class="hljs-keyword">high</span>:
+      <span class="hljs-keyword">if</span> cmp(ident[i], ident[i+<span class="hljs-number">1</span>]) &gt; <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">echo</span> ident[i], <span class="hljs-string">&quot; &gt; &quot;</span>, ident[i+<span class="hljs-number">1</span>]
+        isSorted = <span class="hljs-literal">false</span>
+    <span class="hljs-keyword">if</span> isSorted:
+      <span class="hljs-keyword">echo</span> `filename ident`, <span class="hljs-string">&quot; is sorted&quot;</span>
+    <span class="hljs-keyword">else</span>:
+      <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;[ERROR]&quot;</span>, `filename ident`, <span class="hljs-string">&quot; is NOT sorted&quot;</span>
+
+  <span class="hljs-keyword">template</span> checkContained(identA, identB: <span class="hljs-built_in">untyped</span>) =
+    <span class="hljs-keyword">var</span> isContained = <span class="hljs-literal">true</span>
+    <span class="hljs-keyword">for</span> elem <span class="hljs-keyword">in</span> `identA <span class="hljs-type">Set</span>`:
+      <span class="hljs-keyword">if</span> elem <span class="hljs-keyword">not_in</span> `identB <span class="hljs-type">Set</span>`:
+        <span class="hljs-keyword">echo</span> elem, <span class="hljs-string">&quot; not in &quot;</span>, `filename identB`
+        isContained = <span class="hljs-literal">false</span>
+    <span class="hljs-keyword">if</span> isContained:
+      <span class="hljs-keyword">echo</span> `filename identA`, <span class="hljs-string">&quot; is contained in &quot;</span>, `filename identB`
+    <span class="hljs-keyword">else</span>:
+      <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;[ERROR]&quot;</span>, `filename identA`, <span class="hljs-string">&quot; is NOT contained in &quot;</span>, `filename identB`
+
+  make small5
+  checkIsSorted small5
+  make big5
+  checkIsSorted big5
+  make hotel
+  checkIsSorted hotel
+
+  make curated
+  checkIsSorted curated
+  make fixed
+
+  checkContained fixed, curated
+  <span class="hljs-comment"># checkContained small5, big5 # not expected to happen (and it does not happen)</span>
+
+  make addToWordList
+  make removeFromWordList
+  checkContained removeFromWordList, big5
+
+nbText: &amp;<span class="hljs-string">&quot;&quot;&quot;dictionary from italian version of wordle {linkParolette}
+is used to generated more ideas that have been incorporated in the curated dictionary (or in word list).&quot;&quot;&quot;</span>
+
+nbCode:
+  make parolette
+  <span class="hljs-keyword">let</span> wordIdeas = sorted(toSeq(paroletteSet - curatedSet - big5Set))
+  dump len(wordIdeas)
+  writeFile(filenameParoletteIdeas, wordIdeas.join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>))  
+
+nbText: <span class="hljs-string">&quot;&quot;&quot;Generation of final word list&quot;&quot;&quot;</span>
+
+nbCode:
+  <span class="hljs-keyword">let</span>
+    wordListSet = curatedSet + big5Set + addToWordListSet - removeFromWordListSet
+    wordList = sorted(toSeq(wordListSet))
+  dump len(wordList)
+  checkContained curated, wordList <span class="hljs-comment"># almost obvious</span>
+  writeFile(filenameWordList, wordList.join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>))  
+
+nbText: <span class="hljs-string">&quot;&quot;&quot;## 4. Generate list of solution words &quot;&quot;&quot;</span>
+
+nbCode:
+  <span class="hljs-keyword">var</span> paroleFuture = toSeq(curatedSet - fixedSet)
+  randomize(<span class="hljs-number">202</span>)
+  shuffle(paroleFuture)
+  <span class="hljs-keyword">let</span>
+    parole = fixed &amp; paroleFuture
+  writeFile(filenameParole, parole.join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>))
+  <span class="hljs-keyword">assert</span> len(parole) == len(curated)
+
+nbText: <span class="hljs-string">&quot;&quot;&quot;## 5. Generate itLines.js&quot;&quot;&quot;</span>
+
+nbCode:
+  <span class="hljs-keyword">let</span>
+    paroleForJs = parole.mapIt(&amp;<span class="hljs-string">&quot;</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">{it}</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">&quot;</span>).join(<span class="hljs-string">&quot;, &quot;</span>)
+    wordListForJs = (wordListSet - curatedSet).toSeq.sorted.mapIt(&amp;<span class="hljs-string">&quot;</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">{it}</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">&quot;</span>).join(<span class="hljs-string">&quot;, &quot;</span>)
+  writeFile(filenameItLines): &amp;<span class="hljs-string">&quot;&quot;&quot;
+  var Aa = [{paroleForJs}],
+      La = [{wordListForJs}],
+&quot;&quot;&quot;</span>
+
+nbText: <span class="hljs-string">&quot;&quot;&quot;# Nim(ib) notes
+
+These notes may be of interest to you only if you know what Nim and Nimib are
+(language and library used to generate this document).
+
+* imports are not shown (see Show Source below)
+* const filenames used in initial paragraph but shown later
+&quot;&quot;&quot;</span>
+nbSave</code></pre>
+</section><script>
+function toggleSourceDisplay() {
+  var btn = document.getElementById("show")
+  var source = document.getElementById("source");
+  if (btn.innerHTML=="Show Source") {
+    btn.innerHTML = "Hide Source";
+    source.style.display = "block";
+  } else {
+    btn.innerHTML = "Show Source";
+    source.style.display = "none";
+  }
+}
+</script></body>
+</html>
