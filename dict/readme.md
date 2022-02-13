@@ -21,9 +21,9 @@ dev notes:
   - [x] generate itLines.js
 - [ ] command line tool to playtest list of words (play)
 - [ ] document that summarizes curation process (e.g. curation_notes.md)
-- [ ] changes in wordle (only test version)
+- [x] changes in wordle (only test version)
   - [x] merge current master with test version
   - [x] change start date in wordle code
-  - [ ] add versioning in wordle code (release as 0.what? or 1.0?)
-  - [ ] add n° to number
+  - [x] add versioning in wordle code (release as 0.what? or 1.0?)
+  - [x] add n° to number
 - [ ] copy test into prod (after first PR is merged)
