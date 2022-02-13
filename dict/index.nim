@@ -220,7 +220,7 @@ nbText: """## 5. Generate itLines.js"""
 nbCode:
   let
     paroleForJs = parole.mapIt(&"\"{it}\"").join(", ")
-    wordListForJs = (wordListSet - curatedSet).toSeq.sorted
+    wordListForJs = (wordListSet - curatedSet).toSeq.sorted.mapIt(&"\"{it}\"").join(", ")
   writeFile(filenameItLines): &"""
   var Aa = [{paroleForJs}],
       La = [{wordListForJs}],

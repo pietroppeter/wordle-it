@@ -236,7 +236,7 @@ writeFile(filenameParole, parole.join(<span class="hljs-string">&quot;</span><sp
 <h2>5. Generate itLines.js</h2>
 <pre><code class="nim hljs"><span class="hljs-keyword">let</span>
   paroleForJs = parole.mapIt(&amp;<span class="hljs-string">&quot;</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">{it}</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">&quot;</span>).join(<span class="hljs-string">&quot;, &quot;</span>)
-  wordListForJs = (wordListSet - curatedSet).toSeq.sorted
+  wordListForJs = (wordListSet - curatedSet).toSeq.sorted.mapIt(&amp;<span class="hljs-string">&quot;</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">{it}</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">&quot;</span>).join(<span class="hljs-string">&quot;, &quot;</span>)
 writeFile(filenameItLines): &amp;<span class="hljs-string">&quot;&quot;&quot;
   var Aa = [{paroleForJs}],
       La = [{wordListForJs}],
@@ -480,7 +480,7 @@ nbText: <span class="hljs-string">&quot;&quot;&quot;## 5. Generate itLines.js&qu
 nbCode:
   <span class="hljs-keyword">let</span>
     paroleForJs = parole.mapIt(&amp;<span class="hljs-string">&quot;</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">{it}</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">&quot;</span>).join(<span class="hljs-string">&quot;, &quot;</span>)
-    wordListForJs = (wordListSet - curatedSet).toSeq.sorted
+    wordListForJs = (wordListSet - curatedSet).toSeq.sorted.mapIt(&amp;<span class="hljs-string">&quot;</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">{it}</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">&quot;</span>).join(<span class="hljs-string">&quot;, &quot;</span>)
   writeFile(filenameItLines): &amp;<span class="hljs-string">&quot;&quot;&quot;
   var Aa = [{paroleForJs}],
       La = [{wordListForJs}],
