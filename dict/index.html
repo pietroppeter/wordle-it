@@ -67,27 +67,21 @@ Il risultato (in ordine alfabetico) è salvato in <code>dict/small5.txt</code> e
 Estrarre dai dizionari le parole di 5 lettere che finiscono in consonante o in u (e.g. hotel, ...)
 e salvarle in <code>dict/hotels.txt</code></li>
 <li>il dizionario <code>dict/curated.txt</code> è costruito manualmente a partire dai dizionari fin qui generati.
-Il processo di selezione delle possibili soluzioni è descritto in un documento a parte.
 contestualmente sono creati manualmente due dizionari <code>dict/word_list_add.txt</code>
 e <code>dict/word_list_remove.txt</code> che serviranno
 per generare il dizionario <code>dict/word_list.txt</code>.</li>
-<li>un dizionario <code>dict/fixed.txt</code> è generato a partire dalla soluzioni già usate nel gioco per fissare le
-parole usate a partire dal primo 3 gennaio fino ad una data di modifica della lista di parole da indovinare.
-In particolare il dizionario <code>dict/fixed.txt</code> è contenuto in <code>dict/curated.txt</code> ed è generato a partire dal
-dizionario generato nel prossimo passo.</li>
-<li>Il dizionario <code>dict/parole.txt</code> è generato a partire dalle parole <code>dict/fixed.txt</code>
-e dalle parole in <code>dict/curated.txt</code> con una generazione casuale</li>
+<li>Il dizionario <code>dict/parole.txt</code> è generato dalle parole in <code>dict/curated.txt</code>
+con una generazione casuale
+(tenendo conto di un dizionario <code>dict/itLines.js</code> di parole fisse iniziali usato per gestire i cambi di dizionario)</li>
 <li>Infine viene generato il file <code>dict/itLines.js</code> con le linee di codice da usare nel codice affinché usi
 le liste di <code>dict/parole.txt</code> e <code>dict/word_list.txt</code> generate fino a qui.</li>
 </ol>
-<p><strong>Nota</strong>: il gioco non usa parole accentate. Parole accentate (con accento finale rimosso)
-compaiono in <code>dict/word_list.txt</code> ma non in <code>dict/parole.txt</code>.</p>
 <h2>Storia del processo di generazione del dizionario</h2>
 <p>Il processo è cambiato nel tempo:</p>
 <ul>
 <li>il dizionario piccolo è in uso dal 3 gennaio 2022 (giorno di nascita di Parle)</li>
 <li>il dizionario grande è in uso dal 4 gennaio 2022</li>
-<li>a partire dal 12 febbraio la numerazione delle parole è fatta a partire dal 3 gennaio
+<li>a partire dal 13 febbraio la numerazione delle parole è fatta a partire dal 3 gennaio
 (precedentemente la numerazione era fatta a partire dal 1 febbraio 2021,
 data scelta un po' per caso ed un po' per sbaglio)</li>
 <li>a partire dal 14 febbraio le parole da indovinare sono &quot;curate&quot;, ovvero è stato fatto un processo di selezione
@@ -203,9 +197,9 @@ dict/big5.txt: 7910
 dict/big5.txt is sorted
 dict/hotels.txt: 1281
 dict/hotels.txt is sorted
-dict/curated.txt: 1528
+dict/curated.txt: 1524
 dict/curated.txt is sorted
-dict/fixed.txt: 42
+dict/fixed.txt: 49
 dict/fixed.txt is contained in dict/curated.txt
 dict/word_list_add.txt: 86
 dict/word_list_remove.txt: 167
@@ -225,15 +219,15 @@ dump len(wordList)
 checkContained curated, wordList <span class="hljs-comment"># almost obvious</span>
 writeFile(filenameWordList, wordList.join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>))</code></pre><pre><samp>len(wordList) = 7834
 dict/curated.txt is contained in dict/word_list.txt</samp></pre>
-<h2>4. Generate list of solution words</h2>
+<h2>3. Generate list of solution words</h2>
 <pre><code class="nim hljs"><span class="hljs-keyword">var</span> paroleFuture = toSeq(curatedSet - fixedSet)
-randomize(<span class="hljs-number">202</span>)
+randomize(<span class="hljs-number">880222</span>+<span class="hljs-number">190509</span>+<span class="hljs-number">810713</span>)
 shuffle(paroleFuture)
 <span class="hljs-keyword">let</span>
   parole = fixed &amp; paroleFuture
 writeFile(filenameParole, parole.join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>))
 <span class="hljs-keyword">assert</span> len(parole) == len(curated)</code></pre>
-<h2>5. Generate itLines.js</h2>
+<h2>4. Generate itLines.js</h2>
 <pre><code class="nim hljs"><span class="hljs-keyword">let</span>
   paroleForJs = parole.mapIt(&amp;<span class="hljs-string">&quot;</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">{it}</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">&quot;</span>).join(<span class="hljs-string">&quot;, &quot;</span>)
   wordListForJs = (wordListSet - curatedSet).toSeq.sorted.mapIt(&amp;<span class="hljs-string">&quot;</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">{it}</span><span class="hljs-meta">\&quot;</span><span class="hljs-string">&quot;</span>).join(<span class="hljs-string">&quot;, &quot;</span>)
@@ -316,28 +310,21 @@ Il processo di generazione prevede i seguenti passi:
    Estrarre dai dizionari le parole di 5 lettere che finiscono in consonante o in u (e.g. hotel, ...)
    e salvarle in `{filenameHotel}`
 2. il dizionario `{filenameCurated}` è costruito manualmente a partire dai dizionari fin qui generati.
-   Il processo di selezione delle possibili soluzioni è descritto in un documento a parte.
    contestualmente sono creati manualmente due dizionari `{filenameAddToWordList}`
    e `{filenameRemoveFromWordList}` che serviranno
    per generare il dizionario `{filenameWordList}`.
-3. un dizionario `{filenameFixed}` è generato a partire dalla soluzioni già usate nel gioco per fissare le
-   parole usate a partire dal primo 3 gennaio fino ad una data di modifica della lista di parole da indovinare.
-   In particolare il dizionario `{filenameFixed}` è contenuto in `{filenameCurated}` ed è generato a partire dal
-   dizionario generato nel prossimo passo.
-4. Il dizionario `{filenameParole}` è generato a partire dalle parole `{filenameFixed}`
-   e dalle parole in `{filenameCurated}` con una generazione casuale
-5. Infine viene generato il file `{filenameItLines}` con le linee di codice da usare nel codice affinché usi
+3. Il dizionario `{filenameParole}` è generato dalle parole in `{filenameCurated}`
+   con una generazione casuale
+   (tenendo conto di un dizionario `{filenameItLines}` di parole fisse iniziali usato per gestire i cambi di dizionario)
+4. Infine viene generato il file `{filenameItLines}` con le linee di codice da usare nel codice affinché usi
    le liste di `{filenameParole}` e `{filenameWordList}` generate fino a qui.
-
-**Nota**: il gioco non usa parole accentate. Parole accentate (con accento finale rimosso)
-compaiono in `{filenameWordList}` ma non in `{filenameParole}`.
 
 ## Storia del processo di generazione del dizionario
 
 Il processo è cambiato nel tempo:
   - il dizionario piccolo è in uso dal 3 gennaio 2022 (giorno di nascita di Parle)
   - il dizionario grande è in uso dal 4 gennaio 2022
-  - a partire dal 12 febbraio la numerazione delle parole è fatta a partire dal 3 gennaio
+  - a partire dal 13 febbraio la numerazione delle parole è fatta a partire dal 3 gennaio
     (precedentemente la numerazione era fatta a partire dal 1 febbraio 2021,
     data scelta un po' per caso ed un po' per sbaglio)
   - a partire dal 14 febbraio le parole da indovinare sono &quot;curate&quot;, ovvero è stato fatto un processo di selezione
@@ -464,18 +451,18 @@ nbCode:
   checkContained curated, wordList <span class="hljs-comment"># almost obvious</span>
   writeFile(filenameWordList, wordList.join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>))  
 
-nbText: <span class="hljs-string">&quot;&quot;&quot;## 4. Generate list of solution words &quot;&quot;&quot;</span>
+nbText: <span class="hljs-string">&quot;&quot;&quot;## 3. Generate list of solution words &quot;&quot;&quot;</span>
 
 nbCode:
   <span class="hljs-keyword">var</span> paroleFuture = toSeq(curatedSet - fixedSet)
-  randomize(<span class="hljs-number">202</span>)
+  randomize(<span class="hljs-number">880222</span>+<span class="hljs-number">190509</span>+<span class="hljs-number">810713</span>)
   shuffle(paroleFuture)
   <span class="hljs-keyword">let</span>
     parole = fixed &amp; paroleFuture
   writeFile(filenameParole, parole.join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>))
   <span class="hljs-keyword">assert</span> len(parole) == len(curated)
 
-nbText: <span class="hljs-string">&quot;&quot;&quot;## 5. Generate itLines.js&quot;&quot;&quot;</span>
+nbText: <span class="hljs-string">&quot;&quot;&quot;## 4. Generate itLines.js&quot;&quot;&quot;</span>
 
 nbCode:
   <span class="hljs-keyword">let</span>

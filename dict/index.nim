@@ -56,28 +56,21 @@ Il processo di generazione prevede i seguenti passi:
    Estrarre dai dizionari le parole di 5 lettere che finiscono in consonante o in u (e.g. hotel, ...)
    e salvarle in `{filenameHotel}`
 2. il dizionario `{filenameCurated}` è costruito manualmente a partire dai dizionari fin qui generati.
-   Il processo di selezione delle possibili soluzioni è descritto in un documento a parte.
    contestualmente sono creati manualmente due dizionari `{filenameAddToWordList}`
    e `{filenameRemoveFromWordList}` che serviranno
    per generare il dizionario `{filenameWordList}`.
-3. un dizionario `{filenameFixed}` è generato a partire dalla soluzioni già usate nel gioco per fissare le
-   parole usate a partire dal primo 3 gennaio fino ad una data di modifica della lista di parole da indovinare.
-   In particolare il dizionario `{filenameFixed}` è contenuto in `{filenameCurated}` ed è generato a partire dal
-   dizionario generato nel prossimo passo.
-4. Il dizionario `{filenameParole}` è generato a partire dalle parole `{filenameFixed}`
-   e dalle parole in `{filenameCurated}` con una generazione casuale
-5. Infine viene generato il file `{filenameItLines}` con le linee di codice da usare nel codice affinché usi
+3. Il dizionario `{filenameParole}` è generato dalle parole in `{filenameCurated}`
+   con una generazione casuale
+   (tenendo conto di un dizionario `{filenameItLines}` di parole fisse iniziali usato per gestire i cambi di dizionario)
+4. Infine viene generato il file `{filenameItLines}` con le linee di codice da usare nel codice affinché usi
    le liste di `{filenameParole}` e `{filenameWordList}` generate fino a qui.
-
-**Nota**: il gioco non usa parole accentate. Parole accentate (con accento finale rimosso)
-compaiono in `{filenameWordList}` ma non in `{filenameParole}`.
 
 ## Storia del processo di generazione del dizionario
 
 Il processo è cambiato nel tempo:
   - il dizionario piccolo è in uso dal 3 gennaio 2022 (giorno di nascita di Parle)
   - il dizionario grande è in uso dal 4 gennaio 2022
-  - a partire dal 12 febbraio la numerazione delle parole è fatta a partire dal 3 gennaio
+  - a partire dal 13 febbraio la numerazione delle parole è fatta a partire dal 3 gennaio
     (precedentemente la numerazione era fatta a partire dal 1 febbraio 2021,
     data scelta un po' per caso ed un po' per sbaglio)
   - a partire dal 14 febbraio le parole da indovinare sono "curate", ovvero è stato fatto un processo di selezione
@@ -204,18 +197,18 @@ nbCode:
   checkContained curated, wordList # almost obvious
   writeFile(filenameWordList, wordList.join("\n"))  
 
-nbText: """## 4. Generate list of solution words """
+nbText: """## 3. Generate list of solution words """
 
 nbCode:
   var paroleFuture = toSeq(curatedSet - fixedSet)
-  randomize(202)
+  randomize(880222+190509+810713)
   shuffle(paroleFuture)
   let
     parole = fixed & paroleFuture
   writeFile(filenameParole, parole.join("\n"))
   assert len(parole) == len(curated)
 
-nbText: """## 5. Generate itLines.js"""
+nbText: """## 4. Generate itLines.js"""
 
 nbCode:
   let

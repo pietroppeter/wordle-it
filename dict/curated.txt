@@ -25,7 +25,6 @@ aduso
 aerea
 aereo
 afidi
-afnio
 afona
 afoso
 agape
@@ -341,7 +340,6 @@ copia
 coppa
 coppi
 copri
-coque
 corda
 corna
 corpo
@@ -1230,7 +1228,6 @@ sigla
 sigma
 sinti
 sisma
-situa
 slavi
 slego
 slogo
@@ -1358,7 +1355,6 @@ testa
 teste
 testo
 tetro
-tette
 tetto
 tibia
 tieni
