@@ -21,6 +21,8 @@ nbCode:
     filenameParolette = folderDict & "parolette.txt"
     filenameParoletteIdeas = folderDict & "parolette_ideas.txt"
     filenameItLines = folderDict & "itLines.js"
+    filenameReactleValidGuesses = folderDict & "validGuesses.ts"
+    filenameReactleParole = folderDict & "wordlist.ts"
     linkParolette = "[parolette](https://parolette.netlify.app)"
 
 let blockFilename = nb.blocks.pop
@@ -217,6 +219,21 @@ nbCode:
   writeFile(filenameItLines): &"""
   var Aa = [{paroleForJs}],
       La = [{wordListForJs}],
+"""
+
+nbText: """## 5. Generate files for Reactle"""
+
+nbCode:
+  let
+    reactleValidGuesses = wordList.mapIt(&"  '{it}',").join("\n")
+    reactleParole = parole.mapIt(&"  '{it}',").join("\n")
+  writeFile(filenameReactleValidGuesses): &"""export const VALID_GUESSES = [
+{reactleValidGuesses}
+]
+"""
+  writeFile(filenameReactleParole): &"""export const WORDS = [
+{reactleParole}
+]
 """
 
 nbText: """# Nim(ib) notes

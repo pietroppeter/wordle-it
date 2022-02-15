@@ -107,6 +107,8 @@ data scelta un po' per caso ed un po' per sbaglio)</li>
   filenameParolette = folderDict &amp; <span class="hljs-string">&quot;parolette.txt&quot;</span>
   filenameParoletteIdeas = folderDict &amp; <span class="hljs-string">&quot;parolette_ideas.txt&quot;</span>
   filenameItLines = folderDict &amp; <span class="hljs-string">&quot;itLines.js&quot;</span>
+  filenameReactleValidGuesses = folderDict &amp; <span class="hljs-string">&quot;validGuesses.ts&quot;</span>
+  filenameReactleParole = folderDict &amp; <span class="hljs-string">&quot;wordlist.ts&quot;</span>
   linkParolette = <span class="hljs-string">&quot;[parolette](https://parolette.netlify.app)&quot;</span></code></pre>
 <h2>1. Extract 5 letter words from source dictionaries</h2>
 <pre><code class="nim hljs"><span class="hljs-keyword">type</span> <span class="hljs-type">FilterFileStats</span> = <span class="hljs-keyword">tuple</span>[sourceLines, destLines: <span class="hljs-built_in">int</span>]
@@ -235,6 +237,18 @@ writeFile(filenameItLines): &amp;<span class="hljs-string">&quot;&quot;&quot;
   var Aa = [{paroleForJs}],
       La = [{wordListForJs}],
 &quot;&quot;&quot;</span></code></pre>
+<h2>5. Generate files for Reactle</h2>
+<pre><code class="nim hljs"><span class="hljs-keyword">let</span>
+  reactleValidGuesses = wordList.mapIt(&amp;<span class="hljs-string">&quot;  '{it}',&quot;</span>).join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>)
+  reactleParole = parole.mapIt(&amp;<span class="hljs-string">&quot;  '{it}',&quot;</span>).join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>)
+writeFile(filenameReactleValidGuesses): &amp;<span class="hljs-string">&quot;&quot;&quot;export const VALID_GUESSES = [
+{reactleValidGuesses}
+]
+&quot;&quot;&quot;</span>
+writeFile(filenameReactleParole): &amp;<span class="hljs-string">&quot;&quot;&quot;export const WORDS = [
+{reactleParole}
+]
+&quot;&quot;&quot;</span></code></pre>
 <h1>Nim(ib) notes</h1>
 <p>These notes may be of interest to you only if you know what Nim and Nimib are
 (language and library used to generate this document).</p>
@@ -275,6 +289,8 @@ nbCode:
     filenameParolette = folderDict &amp; <span class="hljs-string">&quot;parolette.txt&quot;</span>
     filenameParoletteIdeas = folderDict &amp; <span class="hljs-string">&quot;parolette_ideas.txt&quot;</span>
     filenameItLines = folderDict &amp; <span class="hljs-string">&quot;itLines.js&quot;</span>
+    filenameReactleValidGuesses = folderDict &amp; <span class="hljs-string">&quot;validGuesses.ts&quot;</span>
+    filenameReactleParole = folderDict &amp; <span class="hljs-string">&quot;wordlist.ts&quot;</span>
     linkParolette = <span class="hljs-string">&quot;[parolette](https://parolette.netlify.app)&quot;</span>
 
 <span class="hljs-keyword">let</span> blockFilename = nb.blocks.pop
@@ -471,6 +487,21 @@ nbCode:
   writeFile(filenameItLines): &amp;<span class="hljs-string">&quot;&quot;&quot;
   var Aa = [{paroleForJs}],
       La = [{wordListForJs}],
+&quot;&quot;&quot;</span>
+
+nbText: <span class="hljs-string">&quot;&quot;&quot;## 5. Generate files for Reactle&quot;&quot;&quot;</span>
+
+nbCode:
+  <span class="hljs-keyword">let</span>
+    reactleValidGuesses = wordList.mapIt(&amp;<span class="hljs-string">&quot;  '{it}',&quot;</span>).join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>)
+    reactleParole = parole.mapIt(&amp;<span class="hljs-string">&quot;  '{it}',&quot;</span>).join(<span class="hljs-string">&quot;</span><span class="hljs-meta">\n</span><span class="hljs-string">&quot;</span>)
+  writeFile(filenameReactleValidGuesses): &amp;<span class="hljs-string">&quot;&quot;&quot;export const VALID_GUESSES = [
+{reactleValidGuesses}
+]
+&quot;&quot;&quot;</span>
+  writeFile(filenameReactleParole): &amp;<span class="hljs-string">&quot;&quot;&quot;export const WORDS = [
+{reactleParole}
+]
 &quot;&quot;&quot;</span>
 
 nbText: <span class="hljs-string">&quot;&quot;&quot;# Nim(ib) notes
