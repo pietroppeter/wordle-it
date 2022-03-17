@@ -23,8 +23,29 @@
     <link rel="manifest" href="manifest.json" />
     <link href="images/parle_logo_32x32.png" rel="icon shortcut" sizes="3232" />
     <link href="images/parle_logo_192x192.png" rel="apple-touch-icon" />
+    <script>
+     function randomAnalytics() {
+      // analytics are loaded once every X times
+      const times = 10;
 
-    <script defer data-domain="pietroppeter.github.io/wordle-it" src="https://plausible.io/js/plausible.js"></script>
+      // pick a random number
+      var index = Math.floor(Math.random()*times);
+      console.log(index)
+
+      if (index === 0) {
+        console.log("loading analytics")
+        // Append JS file to head section.
+        var script = document.createElement('script');
+        script.defer = true
+        script.setAttribute('data-domain', 'pietroppeter.github.io/wordle-it')
+        script.src = 'https://plausible.io/js/plausible.js';
+        document.getElementsByTagName('head')[0].appendChild(script);	
+      }
+      else {
+        console.log("NOT loading analytics")
+      }
+     };
+    </script>
     <style>
       /* Global Styles & Colors */
       :root {
@@ -120,12 +141,12 @@
       }
     </style>
   </head>
-  <body>
+  <body onload="randomAnalytics();">
     <script>
       (function () {
         // Defining the hash before the main bundle allows the bundle access window.hash
         window.wordle = window.wordle || {};
-        window.wordle.hash = 'parle v220213';
+        window.wordle.hash = 'parle v220317';
       })();
     </script>
     <script src="wordle-it.js"></script>
