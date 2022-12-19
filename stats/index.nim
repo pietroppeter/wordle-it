@@ -2,7 +2,6 @@ import nimib
 
 nbInit
 nbRawHtml: """
-<script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
 <style>
 pre {
   overflow-x: auto;
@@ -35,10 +34,19 @@ nbKaraxCode:
       label:
         text "current stats"
       pre:
-        code(lang="json"):
+        code(lang="json", id = "currentStats"):
           text getStats().kstring
-    button(class="btn", `data-clipboard-text` = getStats().kstring):
+    button:
       text "Copy stats"
+      proc onClick() =
+        {.emit: """
+    var copyText = document.getElementById("currentStats").innerText;
+    navigator.clipboard.writeText(copyText).then(() => {
+        // Alert the user that the action took place.
+        // Nobody likes hidden stuff being done under the hood!
+        alert("Copied to clipboard: \"" + copyText +"\"");
+    });
+""".}
     tdiv:
       label:
         text "new stats"
@@ -47,5 +55,8 @@ nbKaraxCode:
       text "Set stats"
       proc onClick() =
         setStats($getVNodeById(statsNewId).getInputText)
-  
 nbSave
+# to copy to clipboard in nim js the only reference found (old) tells to emit:
+# https://gradha.github.io/articles/2019/03/from-python-windows-console-to-nim-karax-webapp.html
+#
+# code to emit taken from: https://stackabuse.com/how-to-copy-to-clipboard-in-javascript-with-the-clipboard-api/
