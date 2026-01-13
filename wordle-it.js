@@ -966,9 +966,19 @@ this.wordle = this.wordle || {}, this.wordle.bundle = function(e) {
   var Ra = new Date(2022, 0, 3, 0, 0, 0, 0);
 
   function $a(e, a) {
-      var s = new Date(e),
-          t = new Date(a).setHours(0, 0, 0, 0) - s.setHours(0, 0, 0, 0);
-      return Math.floor(t / 864e5)
+    var s = new Date(e);
+    var tempDate = new Date(a);
+
+    try {
+      const convertedDate = new Date(tempDate.toLocaleString('en-US', { timeZone: "Europe/Rome" }));
+      tempDate = convertedDate;
+      console.log('convertedDate: ', convertedDate);
+    } catch (error) {
+      console.error('Error converting to Italian timezone: ', error);
+    }
+
+    var t = tempDate.setHours(0, 0, 0, 0) - s.setHours(0, 0, 0, 0);
+    return Math.floor(t / 864e5);
   }
 
   function Pa(e) {
