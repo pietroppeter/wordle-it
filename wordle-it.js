@@ -967,8 +967,10 @@ this.wordle = this.wordle || {}, this.wordle.bundle = function(e) {
 
   function $a(e, a) {
       var s = new Date(e),
-          t = new Date(a).setHours(0, 0, 0, 0) - s.setHours(0, 0, 0, 0);
-      return Math.floor(t / 864e5)
+          t = new Date(a),
+          o = Date.UTC(s.getFullYear(), s.getMonth(), s.getDate()),
+          r = Date.UTC(t.getFullYear(), t.getMonth(), t.getDate());
+      return Math.floor((r - o) / 864e5)
   }
 
   function Pa(e) {
